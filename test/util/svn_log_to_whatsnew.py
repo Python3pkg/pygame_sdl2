@@ -54,7 +54,7 @@ for o in (out + [None]):
         else:
             revisions = "%s-%s" % (min(revs), max(revs))
 
-        print "[SVN %s] %s %s, %s" % (revisions, month, day, year)
+        print("[SVN %s] %s %s, %s" % (revisions, month, day, year))
 
         # uniqify the messages, keep order.
         messages = [p['message'][2:] for p in previous]
@@ -79,11 +79,11 @@ for o in (out + [None]):
 
             for i, l in enumerate(lines):
                 if i == 0:
-                    print "    %s" % (l[:1].upper() + l[1:])
+                    print("    %s" % (l[:1].upper() + l[1:]))
                 if i != 0:
-                    print "      %s" % l
+                    print("      %s" % l)
 
-        print ""
+        print("")
 
         previous  = [o]
 

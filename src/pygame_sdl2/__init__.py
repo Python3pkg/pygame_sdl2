@@ -17,7 +17,7 @@
 #    misrepresented as being the original software.
 # 3. This notice may not be removed or altered from any source distribution.
 
-from __future__ import division, print_function, absolute_import
+
 
 import sys
 import importlib

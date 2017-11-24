@@ -40,7 +40,7 @@ def clear_or_make_dirs(dir):
 def create_zip(zip_file, *files, **var):
     zip = zipfile.ZipFile(zip_file, 'w', compression = zipfile.ZIP_DEFLATED)
     for f in files: zip.write(f, os.path.basename(f))
-    for k, v in var.items(): zip.writestr(k, v)
+    for k, v in list(var.items()): zip.writestr(k, v)
     zip.close()
 
 def dump_and_open_in_browser(string):

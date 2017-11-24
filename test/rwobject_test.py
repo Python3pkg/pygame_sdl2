@@ -23,15 +23,15 @@ class RWopsEncodeStringTest(unittest.TestCase):
     global getrefcount
 
     def test_obj_None(self):
-        self.assert_(encode_string(None) is None)
+        self.assertTrue(encode_string(None) is None)
     
     def test_returns_bytes(self):
         u = as_unicode(r"Hello")
-        self.assert_(isinstance(encode_string(u), bytes_))
+        self.assertTrue(isinstance(encode_string(u), bytes_))
     
     def test_obj_bytes(self):
         b = as_bytes("encyclop\xE6dia")
-        self.assert_(encode_string(b, 'ascii', 'strict') is b)
+        self.assertTrue(encode_string(b, 'ascii', 'strict') is b)
         
     def test_encode_unicode(self):
         u = as_unicode(r"\u00DEe Olde Komp\u00FCter Shoppe")
@@ -49,12 +49,12 @@ class RWopsEncodeStringTest(unittest.TestCase):
 
     def test_encoding_error(self):
         u = as_unicode(r"a\x80b")
-        self.assert_(encode_string(u, 'ascii', 'strict') is None)
+        self.assertTrue(encode_string(u, 'ascii', 'strict') is None)
 
     def test_check_defaults(self):
         u = as_unicode(r"a\u01F7b")
         b = u.encode("unicode_escape", "backslashreplace") 
-        self.assert_(encode_string(u) == b)
+        self.assertTrue(encode_string(u) == b)
 
     def test_etype(self):
         u = as_unicode(r"a\x80b")
@@ -63,9 +63,9 @@ class RWopsEncodeStringTest(unittest.TestCase):
 
     def test_string_with_null_bytes(self):
         b = as_bytes("a\x00b\x00c")
-        self.assert_(encode_string(b, etype=SyntaxError) is b)
+        self.assertTrue(encode_string(b, etype=SyntaxError) is b)
         u = b.decode()
-        self.assert_(encode_string(u, 'ascii', 'strict') == b)
+        self.assertTrue(encode_string(u, 'ascii', 'strict') == b)
 
     try:
         from sys import getrefcount as _g
@@ -98,14 +98,14 @@ class RWopsEncodeFilePathTest(unittest.TestCase):
     # RWopsEncodeString
     def test_encoding(self):
         u = as_unicode(r"Hello")
-        self.assert_(isinstance(encode_file_path(u), bytes_))
+        self.assertTrue(isinstance(encode_file_path(u), bytes_))
     
     def test_error_fowarding(self):
         self.assertRaises(SyntaxError, encode_file_path)
 
     def test_path_with_null_bytes(self):
         b = as_bytes("a\x00b\x00c")
-        self.assert_(encode_file_path(b) is None)
+        self.assertTrue(encode_file_path(b) is None)
 
     def test_etype(self):
         b = as_bytes("a\x00b\x00c")

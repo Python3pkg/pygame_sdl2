@@ -40,17 +40,17 @@ class DrawModuleTest(unittest.TestCase):
         rect = pygame.Rect(10, 10, 25, 20)
         drawn = draw.rect(self.surf, self.color, rect, 0)
 
-        self.assert_(drawn == rect)
+        self.assertTrue(drawn == rect)
 
         #Should be colored where it's supposed to be
         for pt in test_utils.rect_area_pts(rect):
             color_at_pt = self.surf.get_at(pt)
-            self.assert_(color_at_pt == self.color)
+            self.assertTrue(color_at_pt == self.color)
 
         #And not where it shouldn't
         for pt in test_utils.rect_outer_bounds(rect):
             color_at_pt = self.surf.get_at(pt)
-            self.assert_(color_at_pt != self.color)
+            self.assertTrue(color_at_pt != self.color)
     
     def test_rect__one_pixel_lines(self):
         # __doc__ (as of 2008-06-25) for pygame.draw.rect:
@@ -60,17 +60,17 @@ class DrawModuleTest(unittest.TestCase):
         rect = pygame.Rect(10, 10, 56, 20)
     
         drawn = draw.rect(self.surf, self.color, rect, 1)
-        self.assert_(drawn == rect)
+        self.assertTrue(drawn == rect)
 
         #Should be colored where it's supposed to be
         for pt in test_utils.rect_perimeter_pts(drawn):
             color_at_pt = self.surf.get_at(pt)
-            self.assert_(color_at_pt == self.color)
+            self.assertTrue(color_at_pt == self.color)
 
         #And not where it shouldn't
         for pt in test_utils.rect_outer_bounds(drawn):
             color_at_pt = self.surf.get_at(pt)
-            self.assert_(color_at_pt != self.color)
+            self.assertTrue(color_at_pt != self.color)
 
     def test_line(self):
 
@@ -80,17 +80,17 @@ class DrawModuleTest(unittest.TestCase):
           # draw a straight line segment
 
         drawn = draw.line(self.surf, self.color, (1, 0), (200, 0)) #(l, t), (l, t)
-        self.assert_(drawn.right == 201,
+        self.assertTrue(drawn.right == 201,
             "end point arg should be (or at least was) inclusive"
         )
 
         #Should be colored where it's supposed to be
         for pt in test_utils.rect_area_pts(drawn):
-            self.assert_(self.surf.get_at(pt) == self.color)
+            self.assertTrue(self.surf.get_at(pt) == self.color)
 
         #And not where it shouldn't
         for pt in test_utils.rect_outer_bounds(drawn):
-            self.assert_(self.surf.get_at(pt) != self.color)
+            self.assertTrue(self.surf.get_at(pt) != self.color)
 
         #Line width greater that 1
         line_width = 2
@@ -122,15 +122,15 @@ class DrawModuleTest(unittest.TestCase):
                 xinc = 1
             for i in range(line_width):
                 p = (p1[0] + xinc * i, p1[1] + yinc * i)
-                self.assert_(self.surf.get_at(p) == (255, 255, 255), msg)
+                self.assertTrue(self.surf.get_at(p) == (255, 255, 255), msg)
                 p = (p2[0] + xinc * i, p2[1] + yinc * i)
-                self.assert_(self.surf.get_at(p) == (255, 255, 255), msg)
+                self.assertTrue(self.surf.get_at(p) == (255, 255, 255), msg)
             p = (plow[0] - 1, plow[1])
-            self.assert_(self.surf.get_at(p) == (0, 0, 0), msg)
+            self.assertTrue(self.surf.get_at(p) == (0, 0, 0), msg)
             p = (plow[0] + xinc * line_width, plow[1] + yinc * line_width)
-            self.assert_(self.surf.get_at(p) == (0, 0, 0), msg)
+            self.assertTrue(self.surf.get_at(p) == (0, 0, 0), msg)
             p = (phigh[0] + xinc * line_width, phigh[1] + yinc * line_width)
-            self.assert_(self.surf.get_at(p) == (0, 0, 0), msg)
+            self.assertTrue(self.surf.get_at(p) == (0, 0, 0), msg)
             if p1[0] < p2[0]:
                 rx = p1[0]
             else:
@@ -142,7 +142,7 @@ class DrawModuleTest(unittest.TestCase):
             w = abs(p2[0] - p1[0]) + 1 + xinc * (line_width - 1)
             h = abs(p2[1] - p1[1]) + 1 + yinc * (line_width - 1)
             msg += ", %s" % (rec,)
-            self.assert_(rec == (rx, ry, w, h), msg)
+            self.assertTrue(rec == (rx, ry, w, h), msg)
         
     def todo_test_aaline(self):
 

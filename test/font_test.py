@@ -44,20 +44,20 @@ class FontModuleTest( unittest.TestCase ):
         # Can only check that a font object is returned.
         fonts = pygame_font.get_fonts()
         o = pygame_font.SysFont(fonts[0], 20)
-        self.failUnless(isinstance(o, pygame_font.FontType))
+        self.assertTrue(isinstance(o, pygame_font.FontType))
         o = pygame_font.SysFont(fonts[0], 20, italic=True)
-        self.failUnless(isinstance(o, pygame_font.FontType))
+        self.assertTrue(isinstance(o, pygame_font.FontType))
         o = pygame_font.SysFont(fonts[0], 20, bold=True)
-        self.failUnless(isinstance(o, pygame_font.FontType))
+        self.assertTrue(isinstance(o, pygame_font.FontType))
         o = pygame_font.SysFont('thisisnotafont', 20)
-        self.failUnless(isinstance(o, pygame_font.FontType))
+        self.assertTrue(isinstance(o, pygame_font.FontType))
 
     def test_get_default_font(self):
-        self.failUnlessEqual(pygame_font.get_default_font(), 'freesansbold.ttf')
+        self.assertEqual(pygame_font.get_default_font(), 'freesansbold.ttf')
 
     def test_get_fonts_returns_something(self):
         fnts = pygame_font.get_fonts()
-        self.failUnless(fnts)
+        self.assertTrue(fnts)
 
 
     # to test if some files exist...
@@ -81,26 +81,26 @@ class FontModuleTest( unittest.TestCase ):
         if not fnts:
             raise Exception(repr(fnts))
 
-        self.failUnless(fnts)
+        self.assertTrue(fnts)
 
         # strange python 2.x bug... if you assign to unicode, 
         #   all sorts of weirdness happens.
         if sys.version_info <= (3, 0, 0):
-            unicod = unicode
+            unicod = str
         else:
             unicod = str
 
         for name in fnts:
             # note, on ubuntu 2.6 they are all unicode strings.
 
-            self.failUnless(isinstance(name, (str, unicod)), name)
-            self.failUnless(name.islower(), name)
-            self.failUnless(name.isalnum(), name)
+            self.assertTrue(isinstance(name, (str, unicod)), name)
+            self.assertTrue(name.islower(), name)
+            self.assertTrue(name.isalnum(), name)
 
     def test_get_init(self):
-        self.failUnless(pygame_font.get_init())
+        self.assertTrue(pygame_font.get_init())
         pygame_font.quit()
-        self.failIf(pygame_font.get_init())
+        self.assertFalse(pygame_font.get_init())
 
     def test_init(self):
         pygame_font.init()
@@ -112,8 +112,8 @@ class FontModuleTest( unittest.TestCase ):
         # name is a full path.
         for font in fonts:
             path = pygame_font.match_font(font)
-            self.failIf(path is None)
-            self.failUnless(os.path.isabs(path))
+            self.assertFalse(path is None)
+            self.assertTrue(os.path.isabs(path))
 
     def test_match_font_bold(self):
 
@@ -143,13 +143,13 @@ class FontModuleTest( unittest.TestCase ):
         fonts = pygame_font.get_fonts()
 
         # Check for not found.
-        self.failUnless(pygame_font.match_font('thisisnotafont') is None)
+        self.assertTrue(pygame_font.match_font('thisisnotafont') is None)
 
         # Check comma separated list.
         names = ','.join(['thisisnotafont', fonts[-1], 'anothernonfont'])
-        self.failIf(pygame_font.match_font(names) is None)
+        self.assertFalse(pygame_font.match_font(names) is None)
         names = ','.join(['thisisnotafont1', 'thisisnotafont2', 'thisisnotafont3'])
-        self.failUnless(pygame_font.match_font(names) is None)
+        self.assertTrue(pygame_font.match_font(names) is None)
 
 
 
@@ -217,34 +217,34 @@ class FontTypeTest( unittest.TestCase ):
         # Ckecking ascent would need a custom test font to do properly.
         f = pygame_font.Font(None, 20)
         ascent = f.get_ascent()
-        self.failUnless(isinstance(ascent, int))
-        self.failUnless(ascent > 0)
+        self.assertTrue(isinstance(ascent, int))
+        self.assertTrue(ascent > 0)
         s = f.render("X", False, (255, 255, 255))
-        self.failUnless(s.get_size()[1] > ascent)
+        self.assertTrue(s.get_size()[1] > ascent)
 
     def test_get_descent(self):
         # Ckecking descent would need a custom test font to do properly.
         f = pygame_font.Font(None, 20)
         descent = f.get_descent()
-        self.failUnless(isinstance(descent, int))
-        self.failUnless(descent < 0)
+        self.assertTrue(isinstance(descent, int))
+        self.assertTrue(descent < 0)
 
     def test_get_height(self):
         # Ckecking height would need a custom test font to do properly.
         f = pygame_font.Font(None, 20)
         height = f.get_height()
-        self.failUnless(isinstance(height, int))
-        self.failUnless(height > 0)
+        self.assertTrue(isinstance(height, int))
+        self.assertTrue(height > 0)
         s = f.render("X", False, (255, 255, 255))
-        self.failUnless(s.get_size()[1] == height)
+        self.assertTrue(s.get_size()[1] == height)
 
     def test_get_linesize(self):
         # Ckecking linesize would need a custom test font to do properly.
         # Questions: How do linesize, height and descent relate?
         f = pygame_font.Font(None, 20)
         linesize = f.get_linesize()
-        self.failUnless(isinstance(linesize, int))
-        self.failUnless(linesize > 0)
+        self.assertTrue(isinstance(linesize, int))
+        self.assertTrue(linesize > 0)
 
     def test_metrics(self):
         # Ensure bytes decoding works correctly. Can only compare results
@@ -252,27 +252,27 @@ class FontTypeTest( unittest.TestCase ):
         f = pygame_font.Font(None, 20);
         um = f.metrics(as_unicode("."))
         bm = f.metrics(as_bytes("."))
-        self.assert_(len(um) == 1)
-        self.assert_(len(bm) == 1)
-        self.assert_(um[0] is not None)
-        self.assert_(um == bm)
+        self.assertTrue(len(um) == 1)
+        self.assertTrue(len(bm) == 1)
+        self.assertTrue(um[0] is not None)
+        self.assertTrue(um == bm)
         u = as_unicode(r"\u212A")
         b = u.encode("UTF-16")[2:] # Keep byte order consistent. [2:] skips BOM
         bm = f.metrics(b)
-        self.assert_(len(bm) == 2)
+        self.assertTrue(len(bm) == 2)
         try:
             um = f.metrics(u)
         except pygame.error:
             pass
         else:
-            self.assert_(len(um) == 1)
-            self.assert_(bm[0] != um[0])
-            self.assert_(bm[1] != um[0])
+            self.assertTrue(len(um) == 1)
+            self.assertTrue(bm[0] != um[0])
+            self.assertTrue(bm[1] != um[0])
 
         if UCS_4:
             u = as_unicode(r"\U00013000")
             bm = f.metrics(u)
-            self.assert_(len(bm) == 1 and bm[0] is None)
+            self.assertTrue(len(bm) == 1 and bm[0] is None)
     
         return # unfinished
         # The documentation is useless here. How large a list?
@@ -318,13 +318,13 @@ class FontTypeTest( unittest.TestCase ):
                           1, False, [0, 0, 0], [255, 255, 255])
         # is background transparent for antialiasing?
         s = f.render(".", True, [255, 255, 255])
-        self.failUnlessEqual(s.get_at((0, 0))[3], 0)
+        self.assertEqual(s.get_at((0, 0))[3], 0)
         # is Unicode and bytes encoding correct?
         # Cannot really test if the correct characters are rendered, but
         # at least can assert the encodings differ.
         su = f.render(as_unicode("."), False, [0, 0, 0], [255, 255, 255])
         sb = f.render(as_bytes("."), False, [0, 0, 0], [255, 255, 255])
-        self.assert_(equal_images(su, sb))
+        self.assertTrue(equal_images(su, sb))
         u = as_unicode(r"\u212A")
         b = u.encode("UTF-16")[2:] # Keep byte order consistent. [2:] skips BOM
         sb = f.render(b, False, [0, 0, 0], [255, 255, 255])
@@ -333,7 +333,7 @@ class FontTypeTest( unittest.TestCase ):
         except pygame.error:
             pass
         else:
-            self.assert_(not equal_images(su, sb))
+            self.assertTrue(not equal_images(su, sb))
 
         # If the font module is SDL_ttf based, then it can only supports  UCS-2;
         # it will raise an exception for an out-of-range UCS-4 code point.
@@ -395,38 +395,38 @@ class FontTypeTest( unittest.TestCase ):
 
     def test_set_bold(self):
         f = pygame_font.Font(None, 20)
-        self.failIf(f.get_bold())
+        self.assertFalse(f.get_bold())
         f.set_bold(True)
-        self.failUnless(f.get_bold())
+        self.assertTrue(f.get_bold())
         f.set_bold(False)
-        self.failIf(f.get_bold())
+        self.assertFalse(f.get_bold())
 
     def test_set_italic(self):
         f = pygame_font.Font(None, 20)
-        self.failIf(f.get_italic())
+        self.assertFalse(f.get_italic())
         f.set_italic(True)
-        self.failUnless(f.get_italic())
+        self.assertTrue(f.get_italic())
         f.set_italic(False)
-        self.failIf(f.get_italic())
+        self.assertFalse(f.get_italic())
 
     def test_set_underline(self):
         f = pygame_font.Font(None, 20)
-        self.failIf(f.get_underline())
+        self.assertFalse(f.get_underline())
         f.set_underline(True)
-        self.failUnless(f.get_underline())
+        self.assertTrue(f.get_underline())
         f.set_underline(False)
-        self.failIf(f.get_underline())
+        self.assertFalse(f.get_underline())
 
     def test_size(self):
         f = pygame_font.Font(None, 20)
         text = as_unicode("Xg")
         size = f.size(text)
         w, h = size
-        self.assert_(isinstance(w, int) and isinstance(h, int))
+        self.assertTrue(isinstance(w, int) and isinstance(h, int))
         s = f.render(text, False, (255, 255, 255))
-        self.assert_(size == s.get_size())
+        self.assertTrue(size == s.get_size())
         btext = text.encode("ascii")
-        self.assert_(f.size(btext) == size)
+        self.assertTrue(f.size(btext) == size)
         text = as_unicode(r"\u212A")
         btext = text.encode("UTF-16")[2:] # Keep the byte order consistent.
         bsize = f.size(btext)
@@ -435,14 +435,14 @@ class FontTypeTest( unittest.TestCase ):
         except pygame.error:
             pass
         else:
-            self.assert_(size != bsize)
+            self.assertTrue(size != bsize)
 
     def test_font_file_not_found(self):
         # A per BUG reported by Bo Jangeborg on pygame-user mailing list,
         # http://www.mail-archive.com/pygame-users@seul.org/msg11675.html
 
         pygame_font.init()
-        self.failUnlessRaises(IOError,
+        self.assertRaises(IOError,
                               pygame_font.Font,
                               'some-fictional-font.ttf', 20)
 
@@ -556,22 +556,22 @@ class VisualTests( unittest.TestCase ):
                     return False
 
     def test_bold(self):
-        self.failUnless(self.query(bold=True))
+        self.assertTrue(self.query(bold=True))
 
     def test_italic(self):
-        self.failUnless(self.query(italic=True))
+        self.assertTrue(self.query(italic=True))
 
     def test_underline(self):
-        self.failUnless(self.query(underline=True))
+        self.assertTrue(self.query(underline=True))
 
     def test_antialiase(self):
-        self.failUnless(self.query(antialiase=True))
+        self.assertTrue(self.query(antialiase=True))
 
     def test_bold_antialiase(self):
-        self.failUnless(self.query(bold=True, antialiase=True))
+        self.assertTrue(self.query(bold=True, antialiase=True))
 
     def test_italic_underline(self):
-        self.failUnless(self.query(italic=True, underline=True))
+        self.assertTrue(self.query(italic=True, underline=True))
 
 
 if __name__ == '__main__':

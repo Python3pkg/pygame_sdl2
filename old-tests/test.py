@@ -1,4 +1,4 @@
-from __future__ import division, print_function, absolute_import
+
 
 import pygame_sdl2 as pygame
 from pygame_sdl2.locals import *

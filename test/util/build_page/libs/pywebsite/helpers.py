@@ -5,7 +5,7 @@
 import pprint 
 
 def pre_print(s):
-    print '<pre>%s</pre>' % pprint.pformat(s)
+    print('<pre>%s</pre>' % pprint.pformat(s))
 
 __all__ = ['pre_print']
 

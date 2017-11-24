@@ -29,7 +29,7 @@ def main():
 
     parts = {}
 
-    for k in atlas.keys():
+    for k in list(atlas.keys()):
         cat = k.split("/")[1]
         try:
             parts[cat].append(atlas[k])
@@ -72,7 +72,7 @@ def main():
 
         sprites[2].scale += 0.01
         if sprites[2].collides(sprites[4]):
-            print "COLLISION"
+            print("COLLISION")
 
         con.pos = con.pos[0] + 1, con.pos[1] + 1
 
@@ -89,7 +89,7 @@ def main():
         r.render_present()
         clock.tick()
 
-    print clock.get_fps()
+    print(clock.get_fps())
 
 if __name__ == '__main__':
     main()

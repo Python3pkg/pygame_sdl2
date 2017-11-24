@@ -64,11 +64,11 @@ except NameError:
     cmp = staticmethod(cmp)
 
 try:
-    types.ClassType
+    type
 except AttributeError:
     class_types = (type,)
 else:
-    class_types = (type, types.ClassType)
+    class_types = (type, type)
 
 try:
     callable
@@ -81,9 +81,9 @@ except NameError:
         return True
 
 try:
-    basestring
+    str
 except NameError:
-    basestring = str
+    str = str
 
 def geterror():
     return sys.exc_info()[1]
@@ -465,7 +465,7 @@ class TestSuite:
         self._tests.append(test)
 
     def addTests(self, tests):
-        if isinstance(tests, basestring):
+        if isinstance(tests, str):
             raise TypeError("tests must be an iterable of tests, not a string")
         for test in tests:
             self.addTest(test)
@@ -827,7 +827,7 @@ Examples:
 
     def usageExit(self, msg=None):
         if msg: print (msg)
-        print (self.USAGE % self.__dict__)
+        print((self.USAGE % self.__dict__))
         sys.exit(2)
 
     def parseArgs(self, argv):

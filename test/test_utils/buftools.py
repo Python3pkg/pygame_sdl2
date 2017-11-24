@@ -31,7 +31,7 @@ from pygame.newbuffer import (PyBUF_SIMPLE, PyBUF_FORMAT, PyBUF_ND,
                               PyBUF_RECORDS, PyBUF_RECORDS_RO, PyBUF_FULL,
                               PyBUF_FULL_RO, PyBUF_CONTIG, PyBUF_CONTIG_RO)
 
-import unittest
+from . import unittest
 import sys
 import ctypes
 import operator

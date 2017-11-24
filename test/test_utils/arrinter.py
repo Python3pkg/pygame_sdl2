@@ -1,7 +1,7 @@
 import sys
 import ctypes
 from ctypes import *
-import unittest
+from . import unittest
 
 __all__ = ['PAI_CONTIGUOUS', 'PAI_FORTRAN', 'PAI_ALIGNED',
            'PAI_NOTSWAPPED', 'PAI_WRITEABLE', 'PAI_ARR_HAS_DESCR',

@@ -27,7 +27,7 @@ Clock = pygame.time.Clock
 class ClockTypeTest(unittest.TestCase):
     def test_construction(self):
         c = Clock()
-        self.assert_(c, "Clock can be constructed")
+        self.assertTrue(c, "Clock can be constructed")
     
     def todo_test_get_fps(self):
 

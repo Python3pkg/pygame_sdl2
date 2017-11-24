@@ -62,14 +62,14 @@ class GfxdrawDefaultTest( unittest.TestCase ):
         fail_msg = ("%s != %s at %s, bitsize: %i, flags: %i, masks: %s" %
                     (sc, color, posn, surf.get_bitsize(), surf.get_flags(),
                      surf.get_masks()))
-        self.failUnlessEqual(sc, color, fail_msg)
+        self.assertEqual(sc, color, fail_msg)
 
     def check_not_at(self, surf, posn, color):
         sc = surf.get_at(posn)
         fail_msg = ("%s != %s at %s, bitsize: %i, flags: %i, masks: %s" %
                     (sc, color, posn, surf.get_bitsize(), surf.get_flags(),
                      surf.get_masks()))
-        self.failIfEqual(sc, color, fail_msg)
+        self.assertNotEqual(sc, color, fail_msg)
 
     def setUp(self):
         Surface = pygame.Surface
@@ -681,7 +681,7 @@ class GfxdrawDefaultTest( unittest.TestCase ):
 
         # Alpha blit to 8 bits-per-pixel surface forbidden.
         texture = pygame.Surface(self.default_size, SRCALPHA, 32)
-        self.failUnlessRaises(ValueError,
+        self.assertRaises(ValueError,
                               pygame.gfxdraw.textured_polygon,
                               self.surfaces[0],
                               points,

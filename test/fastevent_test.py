@@ -29,7 +29,7 @@ class FasteventModuleTest(unittest.TestCase):
         pygame.display.init()
         fastevent.init()
         event.clear()
-        self.assert_(not event.get())
+        self.assertTrue(not event.get())
 
     def tearDown(self):
         pygame.display.quit()
@@ -43,7 +43,7 @@ class FasteventModuleTest(unittest.TestCase):
         for _ in range(1, 11):
             event.post(event.Event(pygame.USEREVENT))
         
-        self.assertEquals (
+        self.assertEqual (
             [e.type for e in fastevent.get()], [pygame.USEREVENT] * 10,
             race_condition_notification
         )
@@ -66,7 +66,7 @@ class FasteventModuleTest(unittest.TestCase):
           # Returns next event on queue. If there is no event waiting on the
           # queue, this will return an event with type NOEVENT.
         
-        self.assertEquals (
+        self.assertEqual (
             fastevent.poll().type, pygame.NOEVENT, race_condition_notification
         )
     
@@ -93,7 +93,7 @@ class FasteventModuleTest(unittest.TestCase):
         for _ in range(1, 11):
             fastevent.post(event.Event(pygame.USEREVENT))
         
-        self.assertEquals (
+        self.assertEqual (
             [e.type for e in event.get()], [pygame.USEREVENT] * 10,
             race_condition_notification
         )
@@ -105,7 +105,7 @@ class FasteventModuleTest(unittest.TestCase):
             e = geterror()
             msg = ("argument 1 must be %s, not %s" %
                    (fastevent.Event.__name__, type(1).__name__))
-            self.failUnlessEqual(str(e), msg)
+            self.assertEqual(str(e), msg)
         else:
             self.fail()
     
@@ -143,7 +143,7 @@ class FasteventModuleTest(unittest.TestCase):
           # when the user isn't doing anything with it.
         
         event.post(pygame.event.Event(1))
-        self.assertEquals(fastevent.wait().type, 1, race_condition_notification)
+        self.assertEqual(fastevent.wait().type, 1, race_condition_notification)
     
 ################################################################################
 

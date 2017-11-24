@@ -39,17 +39,17 @@ class EventTypeTest(unittest.TestCase):
 
         e = pygame.event.Event(pygame.USEREVENT, some_attr=1, other_attr='1')
 
-        self.assertEquals(e.some_attr, 1)
-        self.assertEquals(e.other_attr, "1")
+        self.assertEqual(e.some_attr, 1)
+        self.assertEqual(e.other_attr, "1")
 
         # Event now uses tp_dictoffset and tp_members: request 62
         # on Motherhamster Bugzilla.
-        self.assertEquals(e.type, pygame.USEREVENT)
-        self.assert_(e.dict is e.__dict__)
+        self.assertEqual(e.type, pygame.USEREVENT)
+        self.assertTrue(e.dict is e.__dict__)
         e.some_attr = 12
-        self.assertEquals(e.some_attr, 12)
+        self.assertEqual(e.some_attr, 12)
         e.new_attr = 15
-        self.assertEquals(e.new_attr, 15)
+        self.assertEqual(e.new_attr, 15)
 
         # For Python 2.x a TypeError is raised for a readonly member;
         # for Python 3.x it is an AttributeError.
@@ -59,12 +59,12 @@ class EventTypeTest(unittest.TestCase):
         # Ensure attributes are visible to dir(), part of the original
         # posted request.
         d = dir(e)
-        self.assert_('type' in d)
-        self.assert_('dict' in d)
-        self.assert_('__dict__' in d)
-        self.assert_('some_attr' in d)
-        self.assert_('other_attr' in d)
-        self.assert_('new_attr' in d)
+        self.assertTrue('type' in d)
+        self.assertTrue('dict' in d)
+        self.assertTrue('__dict__' in d)
+        self.assertTrue('some_attr' in d)
+        self.assertTrue('other_attr' in d)
+        self.assertTrue('new_attr' in d)
 
     def test_as_str(self):
         # Bug reported on Pygame mailing list July 24, 2011:
@@ -88,7 +88,7 @@ class EventModuleTest(unittest.TestCase):
         # flush events
         pygame.display.init()
         pygame.event.clear()
-        self.assert_(not pygame.event.get())
+        self.assertTrue(not pygame.event.get())
 
     def tearDown(self):
         pygame.display.quit()
@@ -103,14 +103,14 @@ class EventModuleTest(unittest.TestCase):
         
         pygame.event.set_blocked(2)
 
-        self.assert_(pygame.event.get_blocked(2))
+        self.assertTrue(pygame.event.get_blocked(2))
 
         pygame.event.post(pygame.event.Event(2))
 
         events = pygame.event.get()
         should_be_blocked = [e for e in events if e.type == 2]
         
-        self.assertEquals(should_be_blocked, [])
+        self.assertEqual(should_be_blocked, [])
                 
     def test_post__and_poll(self):
         # __doc__ (as of 2008-06-25) for pygame.event.post:
@@ -123,22 +123,22 @@ class EventModuleTest(unittest.TestCase):
         pygame.event.post(e1)
 
         posted_event = pygame.event.poll()
-        self.assertEquals (
+        self.assertEqual (
             e1.attr1, posted_event.attr1, race_condition_notification
         )
         
         # fuzzing event types
         for i in range(1, 11):
             pygame.event.post(pygame.event.Event(i))
-            self.assertEquals (
+            self.assertEqual (
                 pygame.event.poll().type, i, race_condition_notification
             )
     def test_post_large_user_event(self):
         pygame.event.post(pygame.event.Event(pygame.USEREVENT, {'a': "a" * 1024}))
 
         e = pygame.event.poll()
-        self.assertEquals(e.type, pygame.USEREVENT)
-        self.assertEquals(e.a, "a" * 1024)
+        self.assertEqual(e.type, pygame.USEREVENT)
+        self.assertEqual(e.a, "a" * 1024)
 
 
 
@@ -154,7 +154,7 @@ class EventModuleTest(unittest.TestCase):
         for _ in range(1, 11):
             pygame.event.post(pygame.event.Event(pygame.USEREVENT))
 
-        self.assert_ ( len(pygame.event.get()) >= 10 )
+        self.assertTrue ( len(pygame.event.get()) >= 10 )
 
     def test_clear(self):
 
@@ -168,11 +168,11 @@ class EventModuleTest(unittest.TestCase):
         for _ in range(1, 11):
             pygame.event.post(pygame.event.Event(_))
         
-        self.assert_(pygame.event.poll())  # there are some events on queue
+        self.assertTrue(pygame.event.poll())  # there are some events on queue
 
         pygame.event.clear()
 
-        self.assert_(not pygame.event.poll(), race_condition_notification)
+        self.assertTrue(not pygame.event.poll(), race_condition_notification)
 
     def test_event_name(self):
 
@@ -181,8 +181,8 @@ class EventModuleTest(unittest.TestCase):
           # pygame.event.event_name(type): return string
           # get the string name from and event id
 
-        self.assertEquals(pygame.event.event_name(2), "KeyDown")
-        self.assertEquals(pygame.event.event_name(24), "UserEvent")
+        self.assertEqual(pygame.event.event_name(2), "KeyDown")
+        self.assertEqual(pygame.event.event_name(24), "UserEvent")
 
     def test_wait(self):
         # __doc__ (as of 2008-06-25) for pygame.event.wait:
@@ -191,7 +191,7 @@ class EventModuleTest(unittest.TestCase):
           # wait for a single event from the queue
 
         pygame.event.post ( pygame.event.Event(2) )
-        self.assert_(pygame.event.wait())
+        self.assertTrue(pygame.event.wait())
         
     def test_peek(self):
 
@@ -207,9 +207,9 @@ class EventModuleTest(unittest.TestCase):
             pygame.event.post (
                 pygame.event.Event(event_type)
             )
-            self.assert_(pygame.event.peek(event_type))
+            self.assertTrue(pygame.event.peek(event_type))
 
-        self.assert_(pygame.event.peek(event_types))
+        self.assertTrue(pygame.event.peek(event_types))
 
     def test_set_allowed(self):
         # __doc__ (as of 2008-06-25) for pygame.event.set_allowed:
@@ -220,9 +220,9 @@ class EventModuleTest(unittest.TestCase):
           # control which events are allowed on the queue
 
         pygame.event.set_blocked(2)
-        self.assert_(pygame.event.get_blocked(2))
+        self.assertTrue(pygame.event.get_blocked(2))
         pygame.event.set_allowed(2)
-        self.assert_(not pygame.event.get_blocked(2))
+        self.assertTrue(not pygame.event.get_blocked(2))
 
     def test_pump(self):
         # __doc__ (as of 2008-06-25) for pygame.event.pump:
@@ -241,9 +241,9 @@ class EventModuleTest(unittest.TestCase):
           # control the sharing of input devices with other applications
 
         pygame.event.set_grab(True)
-        self.assert_(pygame.event.get_grab())
+        self.assertTrue(pygame.event.get_grab())
         pygame.event.set_grab(False)
-        self.assert_(not pygame.event.get_grab())
+        self.assertTrue(not pygame.event.get_grab())
 
     def test_event_equality(self):
         a = pygame.event.Event(1, a=1)
@@ -251,14 +251,14 @@ class EventModuleTest(unittest.TestCase):
         c = pygame.event.Event(2, a=1)
         d = pygame.event.Event(1, a=2)
 
-        self.failUnless(a == a)
-        self.failIf(a != a)
-        self.failUnless(a == b)
-        self.failIf(a != b)
-        self.failUnless(a !=  c)
-        self.failIf(a == c)
-        self.failUnless(a != d)
-        self.failIf(a == d)
+        self.assertTrue(a == a)
+        self.assertFalse(a != a)
+        self.assertTrue(a == b)
+        self.assertFalse(a != b)
+        self.assertTrue(a !=  c)
+        self.assertFalse(a == c)
+        self.assertTrue(a != d)
+        self.assertFalse(a == d)
         
     def todo_test_get_blocked(self):
 

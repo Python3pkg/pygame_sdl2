@@ -52,7 +52,7 @@ class PixelArrayTypeTest (unittest.TestCase, TestMixin):
         self.assertRaises (TypeError, ar.compare, sf2)
         ar2 = pygame.PixelArray (sf2)
         ar3 = ar.compare (ar2)
-        self.assert_ (isinstance (ar3, pygame.PixelArray))
+        self.assertTrue (isinstance (ar3, pygame.PixelArray))
         self.assertEqual (ar3.shape, size)
         sf2.fill (pygame.Color ('white'))
         self.assert_surfaces_equal (sf2, ar3.surface)
@@ -322,7 +322,7 @@ class PixelArrayTypeTest (unittest.TestCase, TestMixin):
             sf = pygame.Surface ((10, 20), 0, bpp)
             sf.fill ((0, 0, 0))
             ar = pygame.PixelArray (sf)
-            self.assert_ (ar.surface is sf)
+            self.assertTrue (ar.surface is sf)
 
     def test_set_slice (self):
         for bpp in (8, 16, 24, 32):
@@ -515,7 +515,7 @@ class PixelArrayTypeTest (unittest.TestCase, TestMixin):
 
             # Array has a single ellipsis subscript: the identity operator
             ar2 = ar[...]
-            self.assert_ (ar2 is ar)
+            self.assertTrue (ar2 is ar)
 
     def test_ass_subscript (self):
         for bpp in (8, 16, 24, 32):

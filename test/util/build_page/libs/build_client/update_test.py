@@ -1,9 +1,10 @@
 import unittest
 import os
 
-import update
-import config
-import helpers
+from . import update
+from . import config
+from . import helpers
+import imp
 
 def mock_config(*args, **kw):
     if args: kw = args[0]
@@ -37,7 +38,7 @@ class HelpersTest(unittest.TestCase):
 
 class UpdateBuildsTest(unittest.TestCase):
     def setUp(self):
-        reload(update)
+        imp.reload(update)
 
     def test_can_mock_global_config_object(self):
         self.assertRaises(Exception, update.build)
@@ -53,14 +54,14 @@ class UpdateBuildsTest(unittest.TestCase):
     def test_BUILD_SUCCESSFUL(self):
         ret_code, output = 0, fixture('BUILD_SUCCESSFUL')
         result, errors = update.parse_build_results(ret_code, output)
-        self.assert_(result is update.BUILD_SUCCESSFUL)
+        self.assertTrue(result is update.BUILD_SUCCESSFUL)
 
     def test_BUILD_FAILED_UNPARSEABLE(self):
         build_output = 'arst'
         ret_code = 1
         result, errors = update.parse_build_results(ret_code, build_output)
         
-        self.assert_(result is update.BUILD_FAILED_UNPARSEABLE)
+        self.assertTrue(result is update.BUILD_FAILED_UNPARSEABLE)
 
     def test_TESTS_PASSED(self):
         test_output = fixture('TESTS_PASSED')
@@ -68,7 +69,7 @@ class UpdateBuildsTest(unittest.TestCase):
         
         result, errors = update.parse_test_results(ret_code, test_output)
         
-        self.assert_(result is update.TESTS_PASSED)
+        self.assertTrue(result is update.TESTS_PASSED)
 
     def test_incomplete(self):
         self.fail('tests_are_incomplete')

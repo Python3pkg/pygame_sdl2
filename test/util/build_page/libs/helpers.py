@@ -72,5 +72,5 @@ __all__ = ['relative_to', 'slug', 'ResultsZip']
 if __name__ == '__main__':
     rz = ResultsZip('results.zip')
     rz.printdir()
-    print rz.platform_id
+    print(rz.platform_id)
     rz.dump_file('bla.zip')

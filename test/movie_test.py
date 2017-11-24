@@ -73,7 +73,7 @@ class MovieTypeTest( unittest.TestCase ):
 
         #self.assertEqual(off_screen.get_at((10,10)), (16, 16, 255, 255))
         #self.assert_(off_screen.get_at((10,10)) in [(16, 16, 255, 255), (18, 13, 238, 255)])
-        self.assert_(within_seq( off_screen.get_at((10,10)), (16, 16, 255, 255), 20 ))
+        self.assertTrue(within_seq( off_screen.get_at((10,10)), (16, 16, 255, 255), 20 ))
 
         pygame.display.quit()
 
@@ -93,7 +93,7 @@ class MovieTypeTest( unittest.TestCase ):
         
         #self.assertEqual(screen.get_at((10,10)), (16, 16, 255, 255))
         #self.assert_(screen.get_at((10,10)) in [(16, 16, 255, 255), (18, 13, 238, 255)])
-        self.assert_(within_seq( screen.get_at((10,10)), (16, 16, 255, 255), 20 ))
+        self.assertTrue(within_seq( screen.get_at((10,10)), (16, 16, 255, 255), 20 ))
 
         pygame.display.quit()
     

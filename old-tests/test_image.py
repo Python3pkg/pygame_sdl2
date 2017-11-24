@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from __future__ import unicode_literals, print_function
+
 
 import pygame_sdl2; pygame_sdl2.import_as_pygame()
 import sys, os
@@ -45,11 +45,11 @@ f = pygame.font.Font('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', 32)
 f.set_italic(True)
 assert f.get_italic()
 assert not f.get_bold()
-surf = f.render(u"Grüßchen, SDL_ttf!", True, (0,0,0))
+surf = f.render("Grüßchen, SDL_ttf!", True, (0,0,0))
 pygame.image.save(surf, "sdl_ttf.png")
 
 ja_font = pygame.font.Font('/usr/share/fonts/truetype/droid/DroidSansJapanese.ttf', 32)
-surf = ja_font.render(u"日本語", True, (0,0,0), (255,255,255))
+surf = ja_font.render("日本語", True, (0,0,0), (255,255,255))
 pygame.image.save(surf, "sdl_ttf2.png")
 
 import pygame.gfxdraw

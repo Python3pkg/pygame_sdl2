@@ -8,7 +8,7 @@ import re
 import time
 import sys
 try: 
-    import StringIO
+    import io
 except ImportError:
     import io as StringIO
 import random
@@ -23,7 +23,7 @@ __unittest = 1
 
 def redirect_output():
     yield sys.stderr, sys.stdout
-    sys.stderr, sys.stdout = StringIO.StringIO(), StringIO.StringIO()
+    sys.stderr, sys.stdout = io.StringIO(), io.StringIO()
     yield sys.stderr, sys.stdout
 
 def restore_output(err, out):
@@ -159,7 +159,7 @@ def printErrorList(self, flavour, errors):
 
         # DUMP REDIRECTED STDERR / STDOUT ON ERROR / FAILURE
         if self.show_redirected_on_errors:
-            stderr, stdout = map(self.tests[test].get, ('stderr','stdout'))
+            stderr, stdout = list(map(self.tests[test].get, ('stderr','stdout')))
             if stderr: self.stream.writeln("STDERR:\n%s" % stderr)
             if stdout: self.stream.writeln("STDOUT:\n%s" % stdout)
 

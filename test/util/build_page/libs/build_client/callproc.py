@@ -6,7 +6,7 @@ import os
 import sys
 
 # User Libs
-from helpers import ProgressIndicator
+from .helpers import ProgressIndicator
 
 ################################################################################
 
@@ -20,7 +20,7 @@ def get_cmd_str(cmd):
         return cmd
 
 def log_cmd(cmd, dir):
-    print "executing:", cmd, 'from dir', os.path.abspath(dir or os.getcwd())
+    print("executing:", cmd, 'from dir', os.path.abspath(dir or os.getcwd()))
 
 ################################################################################
 
@@ -67,7 +67,7 @@ def InteractiveGetReturnCodeAndOutput(cmd, input_string, dir=None,
         stderr = subprocess.STDOUT, universal_newlines = 1
     )
         
-    print "---------------"
+    print("---------------")
     response = proc.communicate(input_string)[0]
     return proc.wait(), response
 

@@ -104,8 +104,8 @@ def get_instance(type_):
 
     try:
         return helper(*arg)
-    except Exception, e:
-        raw_input("FAILED TO CREATE INSTANCE OF %s\n%s\n" 
+    except Exception as e:
+        input("FAILED TO CREATE INSTANCE OF %s\n%s\n" 
                   "Press Enter to continue" % (type_, e))
         return type_
 
@@ -204,7 +204,7 @@ def get_class_from_test_case(TC):
     if 'Type' in TC: return TC[:TC.rindex('Type')]
 
 def names_of(*args):
-    return tuple(map(lambda o: getattr(o, "__name__", str(o)), args))
+    return tuple([getattr(o, "__name__", str(o)) for o in args])
 
 def callable_name(*args):
     args = [a for a in args if a]
@@ -349,12 +349,12 @@ if __name__ == "__main__":
 
     stubs, tested = get_stubs(root)
             
-    for fname in sorted(s for s in stubs.iterkeys() if s not in tested):
+    for fname in sorted(s for s in stubs.keys() if s not in tested):
         if not fname.startswith(root): continue  # eg. module.Class
         test_name, stub = stubs[fname]
 
-        if options.list: print "%s," % fname
-        elif options.test_names: print test_name
-        else: print stub
+        if options.list: print("%s," % fname)
+        elif options.test_names: print(test_name)
+        else: print(stub)
 
 ################################################################################

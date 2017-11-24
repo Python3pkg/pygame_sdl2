@@ -196,7 +196,7 @@ _XP_default_font_files = [
 
 def initsysfonts_win32():
     try:
-        import _winreg
+        import winreg
     except ImportError:
         import winreg as _winreg
 
@@ -248,15 +248,15 @@ def initsysfonts_win32():
 
     for key_name in possible_keys:
         try:
-            key = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, key_name)
+            key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, key_name)
             keys.append(key)
         except WindowsError: # @UndefinedVariable
             pass
 
     for key in keys:
         fontdict = {}
-        for i in range(_winreg.QueryInfoKey(key)[1]):
-            try: name, font, t = _winreg.EnumValue(key,i)
+        for i in range(winreg.QueryInfoKey(key)[1]):
+            try: name, font, t = winreg.EnumValue(key,i)
             except EnvironmentError: break
 
             # try and handle windows unicode strings for some file names.
@@ -403,8 +403,8 @@ _OSX_default_font_files = {
 
 def _search_osx_font_paths(fonts):
 
-    for name, details in _OSX_default_font_files.items():
-        for k, apath in details.items():
+    for name, details in list(_OSX_default_font_files.items()):
+        for k, apath in list(details.items()):
             if os.path.exists(apath):
                 bold, italic = k
                 _addfont(name, bold, italic, apath, fonts)

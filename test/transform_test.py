@@ -72,8 +72,8 @@ def threshold(return_surf, surf, color, threshold = (0,0,0), diff_color = (0,0,0
 
 
     similar = 0
-    for y in xrange(height):
-        for x in xrange(width):
+    for y in range(height):
+        for x in range(width):
             c1 = surf.get_at((x,y))
 
             if ( (abs(c1[0] - r) < tr) &
@@ -228,7 +228,7 @@ class TransformModuleTest( unittest.TestCase ):
         # pixels are within threshold
 
         for pt in test_utils.rect_area_pts(dest_rect):
-            self.assert_(dest_surface.get_at(pt) != change_color)
+            self.assertTrue(dest_surface.get_at(pt) != change_color)
 
         ################################################################
         # Lowering the threshold, expecting changed surface
@@ -549,11 +549,11 @@ class TransformModuleTest( unittest.TestCase ):
         self.assertEqual( sr.get_losses(), s1.get_losses() )
 
         if 0:
-            print ( sr, s1 )
-            print ( sr.get_masks(), s1.get_masks() )
-            print ( sr.get_flags(), s1.get_flags() )
-            print ( sr.get_losses(), s1.get_losses() )
-            print ( sr.get_shifts(), s1.get_shifts() )
+            print(( sr, s1 ))
+            print(( sr.get_masks(), s1.get_masks() ))
+            print(( sr.get_flags(), s1.get_flags() ))
+            print(( sr.get_losses(), s1.get_losses() ))
+            print(( sr.get_shifts(), s1.get_shifts() ))
 
         self.assertEqual(sr.get_at((0,0)), (10,53,50,255))
 
@@ -608,7 +608,7 @@ class TransformModuleTest( unittest.TestCase ):
             s = pygame.transform.rotate(s,rotation)
 
         for pt, color in gradient:
-            self.assert_(s.get_at(pt) == color)
+            self.assertTrue(s.get_at(pt) == color)
 
     def test_scale2x(self):
 
@@ -623,11 +623,11 @@ class TransformModuleTest( unittest.TestCase ):
         # s.set_at((0,0), (20, 20, 20, 255))
 
         s2 = pygame.transform.scale2x(s)
-        self.assertEquals(s2.get_rect().size, (64, 64))
+        self.assertEqual(s2.get_rect().size, (64, 64))
 
     def test_get_smoothscale_backend(self):
         filter_type = pygame.transform.get_smoothscale_backend()
-        self.failUnless(filter_type in ['GENERIC', 'MMX', 'SSE'])
+        self.assertTrue(filter_type in ['GENERIC', 'MMX', 'SSE'])
         # It would be nice to test if a non-generic type corresponds to an x86
         # processor. But there is no simple test for this. platform.machine()
         # returns process version specific information, like 'i686'.
@@ -637,30 +637,30 @@ class TransformModuleTest( unittest.TestCase ):
         original_type = pygame.transform.get_smoothscale_backend()
         pygame.transform.set_smoothscale_backend('GENERIC')
         filter_type = pygame.transform.get_smoothscale_backend()
-        self.failUnlessEqual(filter_type, 'GENERIC')
+        self.assertEqual(filter_type, 'GENERIC')
         # All machines should allow returning to original value.
         # Also check that keyword argument works.
         pygame.transform.set_smoothscale_backend(type=original_type)
         # Something invalid.
         def change():
             pygame.transform.set_smoothscale_backend('mmx')
-        self.failUnlessRaises(ValueError, change)
+        self.assertRaises(ValueError, change)
         # Invalid argument keyword.
         def change():
             pygame.transform.set_smoothscale_backend(t='GENERIC')
-        self.failUnlessRaises(TypeError, change)
+        self.assertRaises(TypeError, change)
         # Invalid argument type.
         def change():
             pygame.transform.set_smoothscale_backend(1)
-        self.failUnlessRaises(TypeError, change)
+        self.assertRaises(TypeError, change)
         # Unsupported type, if possible.
         if original_type != 'SSE':
             def change():
                 pygame.transform.set_smoothscale_backend('SSE')
-            self.failUnlessRaises(ValueError, change)
+            self.assertRaises(ValueError, change)
         # Should be back where we started.
         filter_type = pygame.transform.get_smoothscale_backend()
-        self.failUnlessEqual(filter_type, original_type)
+        self.assertEqual(filter_type, original_type)
 
     def todo_test_chop(self):
 

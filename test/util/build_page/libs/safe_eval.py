@@ -63,16 +63,16 @@ def safe_eval(source, fail_on_error = True):
     walker = fail_on_error and SafeEvalWithErrors() or SafeEval()
     try:
         ast = compiler.parse(source,"eval")
-    except SyntaxError, err:
+    except SyntaxError as err:
         raise
     try:
         return walker.visit(ast)
-    except Unsafe_Source_Error, err:
+    except Unsafe_Source_Error as err:
         raise
 
 class SafeEvalTest(unittest.TestCase):
     def test_False(self):
-        print safe_eval('True')
+        print(safe_eval('True'))
 
 if __name__ == '__main__':
     unittest.main()

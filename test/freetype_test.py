@@ -128,7 +128,7 @@ class FreeTypeFontTest(unittest.TestCase):
         self.assertRaises(OverflowError, ft.Font, file=None, size=-1)
 
         f = ft.Font(None, size=24)
-        self.assert_(f.height > 0)
+        self.assertTrue(f.height > 0)
         self.assertRaises(IOError, f.__init__,
                           os.path.join(FONTDIR, 'nonexistant.ttf'))
         self.assertRaises(RuntimeError, f.get_rect, 'a', size=24)

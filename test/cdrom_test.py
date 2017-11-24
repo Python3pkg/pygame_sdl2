@@ -126,7 +126,7 @@ class CDTypeTest(unittest.TestCase):
             self.cd.init()
             self.cd.eject()
 
-            self.assert_(question('Did the cd eject?'))
+            self.assertTrue(question('Did the cd eject?'))
     
             prompt("Please close the cd drive")
 
@@ -140,7 +140,7 @@ class CDTypeTest(unittest.TestCase):
         if self.cd:
             cd_name = self.cd.get_name()
     
-            self.assert_ (
+            self.assertTrue (
                 question('Is %s the correct name for the cd drive?' % cd_name)
             )
 

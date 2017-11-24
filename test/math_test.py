@@ -161,51 +161,51 @@ class Vector2TypeTest(unittest.TestCase):
 
     def testAdd(self):
         v3 = self.v1 + self.v2
-        self.assert_(isinstance(v3, type(self.v1)))
+        self.assertTrue(isinstance(v3, type(self.v1)))
         self.assertEqual(v3.x, self.v1.x + self.v2.x)
         self.assertEqual(v3.y, self.v1.y + self.v2.y)
         v3 = self.v1 + self.t2
-        self.assert_(isinstance(v3, type(self.v1)))
+        self.assertTrue(isinstance(v3, type(self.v1)))
         self.assertEqual(v3.x, self.v1.x + self.t2[0])
         self.assertEqual(v3.y, self.v1.y + self.t2[1])
         v3 = self.v1 + self.l2
-        self.assert_(isinstance(v3, type(self.v1)))
+        self.assertTrue(isinstance(v3, type(self.v1)))
         self.assertEqual(v3.x, self.v1.x + self.l2[0])
         self.assertEqual(v3.y, self.v1.y + self.l2[1])
         v3 = self.t1 + self.v2
-        self.assert_(isinstance(v3, type(self.v1)))
+        self.assertTrue(isinstance(v3, type(self.v1)))
         self.assertEqual(v3.x, self.t1[0] + self.v2.x)
         self.assertEqual(v3.y, self.t1[1] + self.v2.y)
         v3 = self.l1 + self.v2
-        self.assert_(isinstance(v3, type(self.v1)))
+        self.assertTrue(isinstance(v3, type(self.v1)))
         self.assertEqual(v3.x, self.l1[0] + self.v2.x)
         self.assertEqual(v3.y, self.l1[1] + self.v2.y)
 
     def testSub(self):
         v3 = self.v1 - self.v2
-        self.assert_(isinstance(v3, type(self.v1)))
+        self.assertTrue(isinstance(v3, type(self.v1)))
         self.assertEqual(v3.x, self.v1.x - self.v2.x)
         self.assertEqual(v3.y, self.v1.y - self.v2.y)
         v3 = self.v1 - self.t2
-        self.assert_(isinstance(v3, type(self.v1)))
+        self.assertTrue(isinstance(v3, type(self.v1)))
         self.assertEqual(v3.x, self.v1.x - self.t2[0])
         self.assertEqual(v3.y, self.v1.y - self.t2[1])
         v3 = self.v1 - self.l2
-        self.assert_(isinstance(v3, type(self.v1)))
+        self.assertTrue(isinstance(v3, type(self.v1)))
         self.assertEqual(v3.x, self.v1.x - self.l2[0])
         self.assertEqual(v3.y, self.v1.y - self.l2[1])
         v3 = self.t1 - self.v2
-        self.assert_(isinstance(v3, type(self.v1)))
+        self.assertTrue(isinstance(v3, type(self.v1)))
         self.assertEqual(v3.x, self.t1[0] - self.v2.x)
         self.assertEqual(v3.y, self.t1[1] - self.v2.y)
         v3 = self.l1 - self.v2
-        self.assert_(isinstance(v3, type(self.v1)))
+        self.assertTrue(isinstance(v3, type(self.v1)))
         self.assertEqual(v3.x, self.l1[0] - self.v2.x)
         self.assertEqual(v3.y, self.l1[1] - self.v2.y)
 
     def testScalarMultiplication(self):
         v = self.s1 * self.v1
-        self.assert_(isinstance(v, type(self.v1)))
+        self.assertTrue(isinstance(v, type(self.v1)))
         self.assertEqual(v.x, self.s1 * self.v1.x)
         self.assertEqual(v.y, self.s1 * self.v1.y)
         v = self.v1 * self.s2
@@ -214,28 +214,28 @@ class Vector2TypeTest(unittest.TestCase):
 
     def testScalarDivision(self):
         v = self.v1 / self.s1
-        self.assert_(isinstance(v, type(self.v1)))
+        self.assertTrue(isinstance(v, type(self.v1)))
         self.assertAlmostEqual(v.x, self.v1.x / self.s1)
         self.assertAlmostEqual(v.y, self.v1.y / self.s1)
         v = self.v1 // self.s2
-        self.assert_(isinstance(v, type(self.v1)))
+        self.assertTrue(isinstance(v, type(self.v1)))
         self.assertEqual(v.x, self.v1.x // self.s2)
         self.assertEqual(v.y, self.v1.y // self.s2)
 
     def testBool(self):
         self.assertEqual(bool(self.zeroVec), False)
         self.assertEqual(bool(self.v1), True)
-        self.assert_(not self.zeroVec)
-        self.assert_(self.v1)
+        self.assertTrue(not self.zeroVec)
+        self.assertTrue(self.v1)
 
     def testUnary(self):
         v = +self.v1
-        self.assert_(isinstance(v, type(self.v1)))
+        self.assertTrue(isinstance(v, type(self.v1)))
         self.assertEqual(v.x, self.v1.x)
         self.assertEqual(v.y, self.v1.y)
         self.assertNotEqual(id(v), id(self.v1))
         v = -self.v1
-        self.assert_(isinstance(v, type(self.v1)))
+        self.assertTrue(isinstance(v, type(self.v1)))
         self.assertEqual(v.x, -self.v1.x)
         self.assertEqual(v.y, -self.v1.y)
         self.assertNotEqual(id(v), id(self.v1))
@@ -270,7 +270,7 @@ class Vector2TypeTest(unittest.TestCase):
         it = self.v1.__iter__()
         # support py2.x and 3.x
         if hasattr(it, "next"):
-            next_ = it.next
+            next_ = it.__next__
         elif hasattr(it, "__next__"):
             next_ = it.__next__
         else:
@@ -439,8 +439,8 @@ class Vector2TypeTest(unittest.TestCase):
                          self.v2.distance_squared_to(self.v1))
         
     def testSwizzle(self):
-        self.assertEquals(hasattr(pygame.math, "enable_swizzling"), True)
-        self.assertEquals(hasattr(pygame.math, "disable_swizzling"), True)
+        self.assertEqual(hasattr(pygame.math, "enable_swizzling"), True)
+        self.assertEqual(hasattr(pygame.math, "disable_swizzling"), True)
         # swizzling disabled by default
         self.assertRaises(AttributeError, lambda : self.v1.yx)
         pygame.math.enable_swizzling()
@@ -870,61 +870,61 @@ class Vector3TypeTest(unittest.TestCase):
 
     def testAdd(self):
         v3 = self.v1 + self.v2
-        self.assert_(isinstance(v3, type(self.v1)))
+        self.assertTrue(isinstance(v3, type(self.v1)))
         self.assertEqual(v3.x, self.v1.x + self.v2.x)
         self.assertEqual(v3.y, self.v1.y + self.v2.y)
         self.assertEqual(v3.z, self.v1.z + self.v2.z)
         v3 = self.v1 + self.t2
-        self.assert_(isinstance(v3, type(self.v1)))
+        self.assertTrue(isinstance(v3, type(self.v1)))
         self.assertEqual(v3.x, self.v1.x + self.t2[0])
         self.assertEqual(v3.y, self.v1.y + self.t2[1])
         self.assertEqual(v3.z, self.v1.z + self.t2[2])
         v3 = self.v1 + self.l2
-        self.assert_(isinstance(v3, type(self.v1)))
+        self.assertTrue(isinstance(v3, type(self.v1)))
         self.assertEqual(v3.x, self.v1.x + self.l2[0])
         self.assertEqual(v3.y, self.v1.y + self.l2[1])
         self.assertEqual(v3.z, self.v1.z + self.l2[2])
         v3 = self.t1 + self.v2
-        self.assert_(isinstance(v3, type(self.v1)))
+        self.assertTrue(isinstance(v3, type(self.v1)))
         self.assertEqual(v3.x, self.t1[0] + self.v2.x)
         self.assertEqual(v3.y, self.t1[1] + self.v2.y)
         self.assertEqual(v3.z, self.t1[2] + self.v2.z)
         v3 = self.l1 + self.v2
-        self.assert_(isinstance(v3, type(self.v1)))
+        self.assertTrue(isinstance(v3, type(self.v1)))
         self.assertEqual(v3.x, self.l1[0] + self.v2.x)
         self.assertEqual(v3.y, self.l1[1] + self.v2.y)
         self.assertEqual(v3.z, self.l1[2] + self.v2.z)
 
     def testSub(self):
         v3 = self.v1 - self.v2
-        self.assert_(isinstance(v3, type(self.v1)))
+        self.assertTrue(isinstance(v3, type(self.v1)))
         self.assertEqual(v3.x, self.v1.x - self.v2.x)
         self.assertEqual(v3.y, self.v1.y - self.v2.y)
         self.assertEqual(v3.z, self.v1.z - self.v2.z)
         v3 = self.v1 - self.t2
-        self.assert_(isinstance(v3, type(self.v1)))
+        self.assertTrue(isinstance(v3, type(self.v1)))
         self.assertEqual(v3.x, self.v1.x - self.t2[0])
         self.assertEqual(v3.y, self.v1.y - self.t2[1])
         self.assertEqual(v3.z, self.v1.z - self.t2[2])
         v3 = self.v1 - self.l2
-        self.assert_(isinstance(v3, type(self.v1)))
+        self.assertTrue(isinstance(v3, type(self.v1)))
         self.assertEqual(v3.x, self.v1.x - self.l2[0])
         self.assertEqual(v3.y, self.v1.y - self.l2[1])
         self.assertEqual(v3.z, self.v1.z - self.l2[2])
         v3 = self.t1 - self.v2
-        self.assert_(isinstance(v3, type(self.v1)))
+        self.assertTrue(isinstance(v3, type(self.v1)))
         self.assertEqual(v3.x, self.t1[0] - self.v2.x)
         self.assertEqual(v3.y, self.t1[1] - self.v2.y)
         self.assertEqual(v3.z, self.t1[2] - self.v2.z)
         v3 = self.l1 - self.v2
-        self.assert_(isinstance(v3, type(self.v1)))
+        self.assertTrue(isinstance(v3, type(self.v1)))
         self.assertEqual(v3.x, self.l1[0] - self.v2.x)
         self.assertEqual(v3.y, self.l1[1] - self.v2.y)
         self.assertEqual(v3.z, self.l1[2] - self.v2.z)
 
     def testScalarMultiplication(self):
         v = self.s1 * self.v1
-        self.assert_(isinstance(v, type(self.v1)))
+        self.assertTrue(isinstance(v, type(self.v1)))
         self.assertEqual(v.x, self.s1 * self.v1.x)
         self.assertEqual(v.y, self.s1 * self.v1.y)
         self.assertEqual(v.z, self.s1 * self.v1.z)
@@ -935,12 +935,12 @@ class Vector3TypeTest(unittest.TestCase):
 
     def testScalarDivision(self):
         v = self.v1 / self.s1
-        self.assert_(isinstance(v, type(self.v1)))
+        self.assertTrue(isinstance(v, type(self.v1)))
         self.assertAlmostEqual(v.x, self.v1.x / self.s1)
         self.assertAlmostEqual(v.y, self.v1.y / self.s1)
         self.assertAlmostEqual(v.z, self.v1.z / self.s1)
         v = self.v1 // self.s2
-        self.assert_(isinstance(v, type(self.v1)))
+        self.assertTrue(isinstance(v, type(self.v1)))
         self.assertEqual(v.x, self.v1.x // self.s2)
         self.assertEqual(v.y, self.v1.y // self.s2)
         self.assertEqual(v.z, self.v1.z // self.s2)
@@ -948,18 +948,18 @@ class Vector3TypeTest(unittest.TestCase):
     def testBool(self):
         self.assertEqual(bool(self.zeroVec), False)
         self.assertEqual(bool(self.v1), True)
-        self.assert_(not self.zeroVec)
-        self.assert_(self.v1)
+        self.assertTrue(not self.zeroVec)
+        self.assertTrue(self.v1)
 
     def testUnary(self):
         v = +self.v1
-        self.assert_(isinstance(v, type(self.v1)))
+        self.assertTrue(isinstance(v, type(self.v1)))
         self.assertEqual(v.x, self.v1.x)
         self.assertEqual(v.y, self.v1.y)
         self.assertEqual(v.z, self.v1.z)
         self.assertNotEqual(id(v), id(self.v1))
         v = -self.v1
-        self.assert_(isinstance(v, type(self.v1)))
+        self.assertTrue(isinstance(v, type(self.v1)))
         self.assertEqual(v.x, -self.v1.x)
         self.assertEqual(v.y, -self.v1.y)
         self.assertEqual(v.z, -self.v1.z)
@@ -995,7 +995,7 @@ class Vector3TypeTest(unittest.TestCase):
         it = self.v1.__iter__()
         # support py2.x and 3.x
         if hasattr(it, "next"):
-            next_ = it.next
+            next_ = it.__next__
         elif hasattr(it, "__next__"):
             next_ = it.__next__
         else:
@@ -1303,8 +1303,8 @@ class Vector3TypeTest(unittest.TestCase):
                          self.v2.distance_squared_to(self.v1))
         
     def testSwizzle(self):
-        self.assertEquals(hasattr(pygame.math, "enable_swizzling"), True)
-        self.assertEquals(hasattr(pygame.math, "disable_swizzling"), True)
+        self.assertEqual(hasattr(pygame.math, "enable_swizzling"), True)
+        self.assertEqual(hasattr(pygame.math, "disable_swizzling"), True)
         # swizzling disabled by default
         self.assertRaises(AttributeError, lambda : self.v1.yx)
         pygame.math.enable_swizzling()

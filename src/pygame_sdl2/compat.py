@@ -17,7 +17,7 @@ def geterror ():
     return sys.exc_info()[1]
 
 try:
-    long_ = long
+    long_ = int
 except NameError:
     long_ = int
 
@@ -28,14 +28,14 @@ except NameError:
 
 def get_BytesIO():
     try:
-        from cStringIO import StringIO as BytesIO
+        from io import StringIO as BytesIO
     except ImportError:
         from io import BytesIO
     return BytesIO
 
 def get_StringIO():
     try:
-        from cStringIO import StringIO
+        from io import StringIO
     except ImportError:
         from io import StringIO
     return StringIO
@@ -47,12 +47,12 @@ def ord_(o):
         return o
 
 try:
-    unichr_ = unichr
+    unichr_ = chr
 except NameError:
     unichr_ = chr
 
 try:
-    unicode_ = unicode
+    unicode_ = str
 except NameError:
     unicode_ = str
 
@@ -85,7 +85,7 @@ def filesystem_encode(u):
 #   e.g.: as_unicode(r"Bo\u00F6tes") == u"Bo\u00F6tes" # Python 2.x
 #         as_unicode(r"Bo\u00F6tes") == "Bo\u00F6tes"  # Python 3.x
 try:
-    unicode
+    str
     def as_bytes(string):
         """ '<binary literal>' => '<binary literal>' """
         return string
@@ -108,7 +108,7 @@ try:
 except NameError:
     def next_(i, *args):
         try:
-            return i.next()
+            return next(i)
         except StopIteration:
             if args:
                 return args[0]

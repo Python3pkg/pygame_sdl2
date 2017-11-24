@@ -7,13 +7,13 @@ import sys
 import cgi
 import re
 import glob
-import ConfigParser
+import configparser
 import pprint
 import webbrowser
 
 # User Lib
-import callproc
-from helpers import *
+from . import callproc
+from .helpers import *
 
 ################################################################################
 
@@ -77,7 +77,7 @@ class config_obj(object):
         return html
 
 def merge_dict(dest, indict):
-    for key, val in indict.items():
+    for key, val in list(indict.items()):
         if (key in dest and isinstance(dest[key], dict) and
                             isinstance(val, dict)):
             merge_dict(dest[key], val)
@@ -85,7 +85,7 @@ def merge_dict(dest, indict):
             dest[key] = val
 
 def config_to_dict(config_file):
-    config_data = ConfigParser.SafeConfigParser()
+    config_data = configparser.SafeConfigParser()
     config_data.read([config_file])
 
     defaults = set(config_data.items('DEFAULT'))

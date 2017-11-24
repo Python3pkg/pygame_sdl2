@@ -185,12 +185,12 @@ def run(*args, **kwds):
             try:
                 tags = tag_module.__tags__
             except AttributeError:
-                print ("%s has no tags: ignoring" % (tag_module_name,))
+                print(("%s has no tags: ignoring" % (tag_module_name,)))
                 test_module.append(name)
             else:
                 for tag in tags:
                     if tag in option_exclude:
-                        print ("skipping %s (tag '%s')" % (name, tag))
+                        print(("skipping %s (tag '%s')" % (name, tag)))
                         break
                 else:
                     test_modules.append(name)
@@ -210,7 +210,7 @@ def run(*args, **kwds):
         if option_seed is None:
             option_seed = time.time()
         meta['random_seed'] = option_seed
-        print ("\nRANDOM SEED USED: %s\n" % option_seed)
+        print(("\nRANDOM SEED USED: %s\n" % option_seed))
         random.seed(option_seed)
         random.shuffle(test_modules)
 
@@ -242,12 +242,12 @@ def run(*args, **kwds):
             if value is not None:
                 pass_on_args.append('--%s' % option)
                 pass_on_args.append(str(value))
-        for option, value in options.items():
+        for option, value in list(options.items()):
             if value:
                 pass_on_args.append('--%s' % option)
 
         def sub_test(module):
-            print ('loading %s' % module)
+            print(('loading %s' % module))
 
             cmd = [option_python, test_runner_py, module ] + pass_on_args
 
@@ -306,7 +306,7 @@ def run(*args, **kwds):
     else:
         results = option_all and results or fails
         print (TEST_RESULTS_START)
-        print (pformat(results))
+        print((pformat(results)))
 
     if option_file is not None:
         results_file = open(option_file, 'w')

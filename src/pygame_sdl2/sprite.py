@@ -489,14 +489,14 @@ class AbstractGroup(object):
         if callable(bgd):
             for r in self.lostsprites:
                 bgd(surface, r)
-            for r in self.spritedict.values():
+            for r in list(self.spritedict.values()):
                 if r:
                     bgd(surface, r)
         else:
             surface_blit = surface.blit
             for r in self.lostsprites:
                 surface_blit(bgd, r, r)
-            for r in self.spritedict.values():
+            for r in list(self.spritedict.values()):
                 if r:
                     surface_blit(bgd, r, r)
 
@@ -512,7 +512,7 @@ class AbstractGroup(object):
             self.remove_internal(s)
             s.remove_internal(self)
 
-    def __nonzero__(self):
+    def __bool__(self):
         return truth(self.sprites())
 
     def __len__(self):
@@ -994,7 +994,7 @@ class LayeredDirty(LayeredUpdates):
         self._time_threshold = 1000.0 / 80.0 # 1000.0 / fps
 
         self._bgd = None
-        for key, val in kwargs.items():
+        for key, val in list(kwargs.items()):
             if key in ['_use_update', '_time_threshold', '_default_layer']:
                 if hasattr(self, key):
                     setattr(self, key, val)
@@ -1253,7 +1253,7 @@ class GroupSingle(AbstractGroup):
             self.remove_internal(self.__sprite)
         self.__sprite = sprite
 
-    def __nonzero__(self):
+    def __bool__(self):
         return self.__sprite is not None
 
     def _get_sprite(self):

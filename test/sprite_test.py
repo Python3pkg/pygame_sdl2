@@ -91,7 +91,7 @@ class SpriteCollideTest( unittest.TestCase ):
 
     def test_collide_rect_ratio__collides_all_at_ratio_of_twenty(self):
         # collide_rect_ratio should collide all at a 20.0 ratio.
-        self.assert_ (
+        self.assertTrue (
             unordered_equality (
                 sprite.spritecollide (
                     self.s1, self.ag2, dokill = False,
@@ -122,7 +122,7 @@ class SpriteCollideTest( unittest.TestCase ):
 
     def test_collide_circle_ratio__no_radius_and_ratio_of_twenty(self):
         # collide_circle_ratio with no radius set, at a 20.0 ratio.
-        self.assert_ (
+        self.assertTrue (
             unordered_equality (
                 sprite.spritecollide (
                     self.s1, self.ag2, dokill = False,
@@ -139,7 +139,7 @@ class SpriteCollideTest( unittest.TestCase ):
         self.s2.radius = 10
         self.s3.radius = 400
 
-        self.assert_ (
+        self.assertTrue (
             unordered_equality (
                 sprite.spritecollide (
                     self.s1, self.ag2, dokill = False,
@@ -155,7 +155,7 @@ class SpriteCollideTest( unittest.TestCase ):
         self.s3.radius = 400
 
         # collide_circle_ratio with a radius set.
-        self.assert_ (
+        self.assertTrue (
             unordered_equality (
                 sprite.spritecollide (
                     self.s1, self.ag2, dokill = False,
@@ -220,7 +220,7 @@ class SpriteCollideTest( unittest.TestCase ):
         # to calculate the collision.
 
         # s2 in, s3 out
-        self.assert_(
+        self.assertTrue(
             sprite.spritecollideany(self.s1, self.ag2)
                     )
 
@@ -230,11 +230,11 @@ class SpriteCollideTest( unittest.TestCase ):
 
         # s2 out, s3 in
         self.s3.rect.move_ip(-105, -105)
-        self.assert_(sprite.spritecollideany(self.s1, self.ag2))
+        self.assertTrue(sprite.spritecollideany(self.s1, self.ag2))
 
         # s2 and s3 in
         self.s2.rect.move_ip(0, -10)
-        self.assert_(sprite.spritecollideany(self.s1, self.ag2))
+        self.assertTrue(sprite.spritecollideany(self.s1, self.ag2))
 
     def test_spritecollideany__with_collided_callback(self):
 
@@ -267,18 +267,18 @@ class SpriteCollideTest( unittest.TestCase ):
             return return_container[0]
 
         # This should return True because return_container[0] is True
-        self.assert_(
+        self.assertTrue(
             sprite.spritecollideany(self.s1, self.ag2, collided_callback)
                     )
 
         # The callback function should have been called only once, so self.s1
         # should have only been passed as an argument once
-        self.assert_(len(arg_dict_a) == 1 and arg_dict_a[self.s1] == 1)
+        self.assertTrue(len(arg_dict_a) == 1 and arg_dict_a[self.s1] == 1)
 
         # The callback function should have been called only once, so self.s2
         # exclusive-or self.s3 should have only been passed as an argument
         # once
-        self.assert_(
+        self.assertTrue(
             len(arg_dict_b) == 1 and list(arg_dict_b.values())[0] == 1 and
             (self.s2 in arg_dict_b or self.s3 in arg_dict_b)
                     )
@@ -294,11 +294,11 @@ class SpriteCollideTest( unittest.TestCase ):
 
         # The callback function should have been called as many times as
         # there are sprites in self.ag2
-        self.assert_(len(arg_dict_a) == 1 and arg_dict_a[self.s1] == 2)
+        self.assertTrue(len(arg_dict_a) == 1 and arg_dict_a[self.s1] == 2)
 
         # The callback function should have been twice because self.s2 and
         # self.s3 should have been passed once each
-        self.assert_(
+        self.assertTrue(
             len(arg_dict_b) == 2 and
             arg_dict_b[self.s2] == 1 and arg_dict_b[self.s3] == 1
                     )
@@ -310,26 +310,26 @@ class SpriteCollideTest( unittest.TestCase ):
 
         # test no kill
         crashed = pygame.sprite.groupcollide(self.ag, self.ag2, False, False)
-        self.assert_(crashed == {self.s1: [self.s2]})
+        self.assertTrue(crashed == {self.s1: [self.s2]})
 
         crashed = pygame.sprite.groupcollide(self.ag, self.ag2, False, False)
-        self.assert_(crashed == {self.s1: [self.s2]})
+        self.assertTrue(crashed == {self.s1: [self.s2]})
 
         # test killb
         crashed = pygame.sprite.groupcollide(self.ag, self.ag2, False, True)
-        self.assert_(crashed == {self.s1: [self.s2]})
+        self.assertTrue(crashed == {self.s1: [self.s2]})
 
         crashed = pygame.sprite.groupcollide(self.ag, self.ag2, False, False)
-        self.assert_(crashed == {})
+        self.assertTrue(crashed == {})
 
         # test killa
         self.s3.rect.move_ip(-100, -100)
 
         crashed = pygame.sprite.groupcollide(self.ag, self.ag2, True, False)
-        self.assert_(crashed == {self.s1: [self.s3]})
+        self.assertTrue(crashed == {self.s1: [self.s3]})
 
         crashed = pygame.sprite.groupcollide(self.ag, self.ag2, False, False)
-        self.assert_(crashed == {})
+        self.assertTrue(crashed == {})
 
     def test_groupcollide__with_collided_callback(self):
 
@@ -339,31 +339,31 @@ class SpriteCollideTest( unittest.TestCase ):
         # test no kill
         crashed = pygame.sprite.groupcollide(self.ag, self.ag2, False, False,
                                              collided_callback_false)
-        self.assert_(crashed == {})
+        self.assertTrue(crashed == {})
 
         crashed = pygame.sprite.groupcollide(self.ag, self.ag2, False, False,
                                              collided_callback_true)
-        self.assert_(crashed == {self.s1: [self.s2, self.s3]} or
+        self.assertTrue(crashed == {self.s1: [self.s2, self.s3]} or
                      crashed == {self.s1: [self.s3, self.s2]})
 
         crashed = pygame.sprite.groupcollide(self.ag, self.ag2, False, False,
                                              collided_callback_true)
-        self.assert_(crashed == {self.s1: [self.s2, self.s3]} or
+        self.assertTrue(crashed == {self.s1: [self.s2, self.s3]} or
                      crashed == {self.s1: [self.s3, self.s2]})
 
         # test killb
         crashed = pygame.sprite.groupcollide(self.ag, self.ag2, False, True,
                                              collided_callback_false)
-        self.assert_(crashed == {})
+        self.assertTrue(crashed == {})
 
         crashed = pygame.sprite.groupcollide(self.ag, self.ag2, False, True,
                                              collided_callback_true)
-        self.assert_(crashed == {self.s1: [self.s2, self.s3]} or
+        self.assertTrue(crashed == {self.s1: [self.s2, self.s3]} or
                      crashed == {self.s1: [self.s3, self.s2]})
 
         crashed = pygame.sprite.groupcollide(self.ag, self.ag2, False, True,
                                              collided_callback_true)
-        self.assert_(crashed == {})
+        self.assertTrue(crashed == {})
 
         # test killa
         self.ag.add(self.s2)
@@ -371,36 +371,36 @@ class SpriteCollideTest( unittest.TestCase ):
 
         crashed = pygame.sprite.groupcollide(self.ag, self.ag2, True, False,
                                              collided_callback_false)
-        self.assert_(crashed == {})
+        self.assertTrue(crashed == {})
 
         crashed = pygame.sprite.groupcollide(self.ag, self.ag2, True, False,
                                              collided_callback_true)
-        self.assert_(crashed == {self.s1: [self.s3], self.s2: [self.s3]})
+        self.assertTrue(crashed == {self.s1: [self.s3], self.s2: [self.s3]})
 
         crashed = pygame.sprite.groupcollide(self.ag, self.ag2, True, False,
                                              collided_callback_true)
-        self.assert_(crashed == {})
+        self.assertTrue(crashed == {})
 
     def test_collide_rect(self):
 
         # Test colliding - some edges touching
-        self.assert_(pygame.sprite.collide_rect(self.s1, self.s2))
-        self.assert_(pygame.sprite.collide_rect(self.s2, self.s1))
+        self.assertTrue(pygame.sprite.collide_rect(self.s1, self.s2))
+        self.assertTrue(pygame.sprite.collide_rect(self.s2, self.s1))
 
         # Test colliding - all edges touching
         self.s2.rect.center = self.s3.rect.center
-        self.assert_(pygame.sprite.collide_rect(self.s2, self.s3))
-        self.assert_(pygame.sprite.collide_rect(self.s3, self.s2))
+        self.assertTrue(pygame.sprite.collide_rect(self.s2, self.s3))
+        self.assertTrue(pygame.sprite.collide_rect(self.s3, self.s2))
 
         # Test colliding - no edges touching
         self.s2.rect.inflate_ip(10, 10)
-        self.assert_(pygame.sprite.collide_rect(self.s2, self.s3))
-        self.assert_(pygame.sprite.collide_rect(self.s3, self.s2))
+        self.assertTrue(pygame.sprite.collide_rect(self.s2, self.s3))
+        self.assertTrue(pygame.sprite.collide_rect(self.s3, self.s2))
 
         # Test colliding - some edges intersecting
         self.s2.rect.center = (self.s1.rect.right, self.s1.rect.bottom)
-        self.assert_(pygame.sprite.collide_rect(self.s1, self.s2))
-        self.assert_(pygame.sprite.collide_rect(self.s2, self.s1))
+        self.assertTrue(pygame.sprite.collide_rect(self.s1, self.s2))
+        self.assertTrue(pygame.sprite.collide_rect(self.s2, self.s1))
 
         # Test not colliding
         self.assertFalse(pygame.sprite.collide_rect(self.s1, self.s3))
@@ -474,16 +474,16 @@ class AbstractGroupTypeTest( unittest.TestCase ):
         self.assertFalse(self.s4 in ag3)
 
         ag3.add(self.s1, [self.s2], self.ag2)
-        self.assert_(self.s1 in ag3)
-        self.assert_(self.s2 in ag3)
-        self.assert_(self.s3 in ag3)
-        self.assert_(self.s4 in ag3)
+        self.assertTrue(self.s1 in ag3)
+        self.assertTrue(self.s2 in ag3)
+        self.assertTrue(self.s3 in ag3)
+        self.assertTrue(self.s4 in ag3)
 
     def test_add_internal(self):
 
         self.assertFalse(self.s1 in self.ag2)
         self.ag2.add_internal(self.s1)
-        self.assert_(self.s1 in self.ag2)
+        self.assertTrue(self.s1 in self.ag2)
 
     def test_clear(self):
 
@@ -510,7 +510,7 @@ class AbstractGroupTypeTest( unittest.TestCase ):
 
     def test_has_internal(self):
 
-        self.assert_(self.ag.has_internal(self.s1))
+        self.assertTrue(self.ag.has_internal(self.s1))
         self.assertFalse(self.ag.has_internal(self.s3))
 
     def test_remove(self):
@@ -546,7 +546,7 @@ class AbstractGroupTypeTest( unittest.TestCase ):
     def test_sprites(self):
 
         sprite_list = self.ag.sprites()
-        self.assert_(sprite_list == [self.s1, self.s2] or
+        self.assertTrue(sprite_list == [self.s1, self.s2] or
                      sprite_list == [self.s2, self.s1])
 
     def test_update(self):
@@ -570,57 +570,57 @@ class AbstractGroupTypeTest( unittest.TestCase ):
 
 class LayeredGroupBase:
     def test_get_layer_of_sprite(self):
-        self.assert_(len(self.LG._spritelist)==0)
+        self.assertTrue(len(self.LG._spritelist)==0)
         spr = self.sprite()
         self.LG.add(spr, layer=666)
-        self.assert_(len(self.LG._spritelist)==1)
-        self.assert_(self.LG.get_layer_of_sprite(spr)==666)
-        self.assert_(self.LG.get_layer_of_sprite(spr)==self.LG._spritelayers[spr])
+        self.assertTrue(len(self.LG._spritelist)==1)
+        self.assertTrue(self.LG.get_layer_of_sprite(spr)==666)
+        self.assertTrue(self.LG.get_layer_of_sprite(spr)==self.LG._spritelayers[spr])
 
 
     def test_add(self):
-        self.assert_(len(self.LG._spritelist)==0)
+        self.assertTrue(len(self.LG._spritelist)==0)
         spr = self.sprite()
         self.LG.add(spr)
-        self.assert_(len(self.LG._spritelist)==1)
-        self.assert_(self.LG.get_layer_of_sprite(spr)==self.LG._default_layer)
+        self.assertTrue(len(self.LG._spritelist)==1)
+        self.assertTrue(self.LG.get_layer_of_sprite(spr)==self.LG._default_layer)
 
     def test_add__sprite_with_layer_attribute(self):
         #test_add_sprite_with_layer_attribute
 
-        self.assert_(len(self.LG._spritelist)==0)
+        self.assertTrue(len(self.LG._spritelist)==0)
         spr = self.sprite()
         spr._layer = 100
         self.LG.add(spr)
-        self.assert_(len(self.LG._spritelist)==1)
-        self.assert_(self.LG.get_layer_of_sprite(spr)==100)
+        self.assertTrue(len(self.LG._spritelist)==1)
+        self.assertTrue(self.LG.get_layer_of_sprite(spr)==100)
 
     def test_add__passing_layer_keyword(self):
         # test_add_sprite_passing_layer
 
-        self.assert_(len(self.LG._spritelist)==0)
+        self.assertTrue(len(self.LG._spritelist)==0)
         spr = self.sprite()
         self.LG.add(spr, layer=100)
-        self.assert_(len(self.LG._spritelist)==1)
-        self.assert_(self.LG.get_layer_of_sprite(spr)==100)
+        self.assertTrue(len(self.LG._spritelist)==1)
+        self.assertTrue(self.LG.get_layer_of_sprite(spr)==100)
 
     def test_add__overriding_sprite_layer_attr(self):
         # test_add_sprite_overriding_layer_attr
 
-        self.assert_(len(self.LG._spritelist)==0)
+        self.assertTrue(len(self.LG._spritelist)==0)
         spr = self.sprite()
         spr._layer = 100
         self.LG.add(spr, layer=200)
-        self.assert_(len(self.LG._spritelist)==1)
-        self.assert_(self.LG.get_layer_of_sprite(spr)==200)
+        self.assertTrue(len(self.LG._spritelist)==1)
+        self.assertTrue(self.LG.get_layer_of_sprite(spr)==200)
 
     def test_add__adding_sprite_on_init(self):
         # test_add_sprite_init
 
         spr = self.sprite()
         lrg2 = sprite.LayeredUpdates(spr)
-        self.assert_(len(lrg2._spritelist)==1)
-        self.assert_(lrg2._spritelayers[spr]==lrg2._default_layer)
+        self.assertTrue(len(lrg2._spritelist)==1)
+        self.assertTrue(lrg2._spritelayers[spr]==lrg2._default_layer)
 
     def test_add__sprite_init_layer_attr(self):
         # test_add_sprite_init_layer_attr
@@ -628,16 +628,16 @@ class LayeredGroupBase:
         spr = self.sprite()
         spr._layer = 20
         lrg2 = sprite.LayeredUpdates(spr)
-        self.assert_(len(lrg2._spritelist)==1)
-        self.assert_(lrg2._spritelayers[spr]==20)
+        self.assertTrue(len(lrg2._spritelist)==1)
+        self.assertTrue(lrg2._spritelayers[spr]==20)
 
     def test_add__sprite_init_passing_layer(self):
         # test_add_sprite_init_passing_layer
 
         spr = self.sprite()
         lrg2 = sprite.LayeredUpdates(spr, layer=33)
-        self.assert_(len(lrg2._spritelist)==1)
-        self.assert_(lrg2._spritelayers[spr]==33)
+        self.assertTrue(len(lrg2._spritelist)==1)
+        self.assertTrue(lrg2._spritelayers[spr]==33)
 
     def test_add__sprite_init_overiding_layer(self):
         # test_add_sprite_init_overiding_layer
@@ -645,102 +645,102 @@ class LayeredGroupBase:
         spr = self.sprite()
         spr._layer = 55
         lrg2 = sprite.LayeredUpdates(spr, layer=33)
-        self.assert_(len(lrg2._spritelist)==1)
-        self.assert_(lrg2._spritelayers[spr]==33)
+        self.assertTrue(len(lrg2._spritelist)==1)
+        self.assertTrue(lrg2._spritelayers[spr]==33)
 
     def test_add__spritelist(self):
         # test_add_spritelist
 
-        self.assert_(len(self.LG._spritelist)==0)
+        self.assertTrue(len(self.LG._spritelist)==0)
         sprites = []
         for i in range(10):
             sprites.append(self.sprite())
         self.LG.add(sprites)
-        self.assert_(len(self.LG._spritelist)==10)
+        self.assertTrue(len(self.LG._spritelist)==10)
         for i in range(10):
-            self.assert_(self.LG.get_layer_of_sprite(sprites[i])==self.LG._default_layer)
+            self.assertTrue(self.LG.get_layer_of_sprite(sprites[i])==self.LG._default_layer)
 
     def test_add__spritelist_with_layer_attr(self):
         # test_add_spritelist_with_layer_attr
 
-        self.assert_(len(self.LG._spritelist)==0)
+        self.assertTrue(len(self.LG._spritelist)==0)
         sprites = []
         for i in range(10):
             sprites.append(self.sprite())
             sprites[-1]._layer = i
         self.LG.add(sprites)
-        self.assert_(len(self.LG._spritelist)==10)
+        self.assertTrue(len(self.LG._spritelist)==10)
         for i in range(10):
-            self.assert_(self.LG.get_layer_of_sprite(sprites[i])==i)
+            self.assertTrue(self.LG.get_layer_of_sprite(sprites[i])==i)
 
     def test_add__spritelist_passing_layer(self):
         # test_add_spritelist_passing_layer
 
-        self.assert_(len(self.LG._spritelist)==0)
+        self.assertTrue(len(self.LG._spritelist)==0)
         sprites = []
         for i in range(10):
             sprites.append(self.sprite())
         self.LG.add(sprites, layer=33)
-        self.assert_(len(self.LG._spritelist)==10)
+        self.assertTrue(len(self.LG._spritelist)==10)
         for i in range(10):
-            self.assert_(self.LG.get_layer_of_sprite(sprites[i])==33)
+            self.assertTrue(self.LG.get_layer_of_sprite(sprites[i])==33)
 
     def test_add__spritelist_overriding_layer(self):
         # test_add_spritelist_overriding_layer
 
-        self.assert_(len(self.LG._spritelist)==0)
+        self.assertTrue(len(self.LG._spritelist)==0)
         sprites = []
         for i in range(10):
             sprites.append(self.sprite())
             sprites[-1].layer = i
         self.LG.add(sprites, layer=33)
-        self.assert_(len(self.LG._spritelist)==10)
+        self.assertTrue(len(self.LG._spritelist)==10)
         for i in range(10):
-            self.assert_(self.LG.get_layer_of_sprite(sprites[i])==33)
+            self.assertTrue(self.LG.get_layer_of_sprite(sprites[i])==33)
 
     def test_add__spritelist_init(self):
         # test_add_spritelist_init
 
-        self.assert_(len(self.LG._spritelist)==0)
+        self.assertTrue(len(self.LG._spritelist)==0)
         sprites = []
         for i in range(10):
             sprites.append(self.sprite())
         lrg2 = sprite.LayeredUpdates(sprites)
-        self.assert_(len(lrg2._spritelist)==10)
+        self.assertTrue(len(lrg2._spritelist)==10)
         for i in range(10):
-            self.assert_(lrg2.get_layer_of_sprite(sprites[i])==self.LG._default_layer)
+            self.assertTrue(lrg2.get_layer_of_sprite(sprites[i])==self.LG._default_layer)
 
     def test_remove__sprite(self):
         # test_remove_sprite
 
-        self.assert_(len(self.LG._spritelist)==0)
+        self.assertTrue(len(self.LG._spritelist)==0)
         sprites = []
         for i in range(10):
             sprites.append(self.sprite())
             sprites[-1].rect = 0
         self.LG.add(sprites)
-        self.assert_(len(self.LG._spritelist)==10)
+        self.assertTrue(len(self.LG._spritelist)==10)
         for i in range(10):
             self.LG.remove(sprites[i])
-        self.assert_(len(self.LG._spritelist)==0)
+        self.assertTrue(len(self.LG._spritelist)==0)
 
     def test_sprites(self):
         # test_sprites
 
-        self.assert_(len(self.LG._spritelist)==0)
+        self.assertTrue(len(self.LG._spritelist)==0)
         sprites = []
         for i in range(10):
             sprites.append(self.sprite())
             sprites[-1]._layer = 10-i
         self.LG.add(sprites)
-        self.assert_(len(self.LG._spritelist)==10)
+        self.assertTrue(len(self.LG._spritelist)==10)
         for idx,spr in enumerate(self.LG.sprites()):
-            self.assert_(spr == sprites[9-idx])
+            self.assertTrue(spr == sprites[9-idx])
 
     def test_layers(self):
         # test_layers
 
-        self.assert_(len(self.LG._spritelist)==0)
+        self.assertTrue(len(self.LG._spritelist)==0)
         sprites = []
         for i in range(10):
             for j in range(5):
@@ -749,34 +749,34 @@ class LayeredGroupBase:
         self.LG.add(sprites)
         lays = self.LG.layers()
         for i in range(10):
-            self.assert_(lays[i] == i)
+            self.assertTrue(lays[i] == i)
 
     def test_add__layers_are_correct(self):  #TODO
         # test_layers2
 
-        self.assert_(len(self.LG)==0)
+        self.assertTrue(len(self.LG)==0)
         layers = [1,4,6,8,3,6,2,6,4,5,6,1,0,9,7,6,54,8,2,43,6,1]
         for lay in layers:
             self.LG.add(self.sprite(), layer=lay)
         layers.sort()
         for idx, spr in enumerate(self.LG.sprites()):
-            self.assert_(self.LG.get_layer_of_sprite(spr)==layers[idx])
+            self.assertTrue(self.LG.get_layer_of_sprite(spr)==layers[idx])
 
     def test_change_layer(self):
         # test_change_layer
 
-        self.assert_(len(self.LG._spritelist)==0)
+        self.assertTrue(len(self.LG._spritelist)==0)
         spr = self.sprite()
         self.LG.add(spr, layer=99)
-        self.assert_(self.LG._spritelayers[spr] == 99)
+        self.assertTrue(self.LG._spritelayers[spr] == 99)
         self.LG.change_layer(spr, 44)
-        self.assert_(self.LG._spritelayers[spr] == 44)
+        self.assertTrue(self.LG._spritelayers[spr] == 44)
 
         spr2 = self.sprite()
         spr2.layer = 55
         self.LG.add(spr2)
         self.LG.change_layer(spr2, 77)
-        self.assert_(spr2.layer == 77)
+        self.assertTrue(spr2.layer == 77)
 
     def test_get_top_layer(self):
         # test_get_top_layer
@@ -784,9 +784,9 @@ class LayeredGroupBase:
         layers = [1,5,2,8,4,5,3,88,23,0]
         for i in layers:
             self.LG.add(self.sprite(), layer=i)
-        self.assert_(self.LG.get_top_layer()==max(layers))
-        self.assert_(self.LG.get_top_layer()==max(self.LG._spritelayers.values()))
-        self.assert_(self.LG.get_top_layer()==self.LG._spritelayers[self.LG._spritelist[-1]])
+        self.assertTrue(self.LG.get_top_layer()==max(layers))
+        self.assertTrue(self.LG.get_top_layer()==max(self.LG._spritelayers.values()))
+        self.assertTrue(self.LG.get_top_layer()==self.LG._spritelayers[self.LG._spritelist[-1]])
 
     def test_get_bottom_layer(self):
         # test_get_bottom_layer
@@ -794,9 +794,9 @@ class LayeredGroupBase:
         layers = [1,5,2,8,4,5,3,88,23,0]
         for i in layers:
             self.LG.add(self.sprite(), layer=i)
-        self.assert_(self.LG.get_bottom_layer()==min(layers))
-        self.assert_(self.LG.get_bottom_layer()==min(self.LG._spritelayers.values()))
-        self.assert_(self.LG.get_bottom_layer()==self.LG._spritelayers[self.LG._spritelist[0]])
+        self.assertTrue(self.LG.get_bottom_layer()==min(layers))
+        self.assertTrue(self.LG.get_bottom_layer()==min(self.LG._spritelayers.values()))
+        self.assertTrue(self.LG.get_bottom_layer()==self.LG._spritelayers[self.LG._spritelist[0]])
 
     def test_move_to_front(self):
         # test_move_to_front
@@ -806,9 +806,9 @@ class LayeredGroupBase:
             self.LG.add(self.sprite(), layer=i)
         spr = self.sprite()
         self.LG.add(spr, layer=3)
-        self.assert_(spr != self.LG._spritelist[-1])
+        self.assertTrue(spr != self.LG._spritelist[-1])
         self.LG.move_to_front(spr)
-        self.assert_(spr == self.LG._spritelist[-1])
+        self.assertTrue(spr == self.LG._spritelist[-1])
 
     def test_move_to_back(self):
         # test_move_to_back
@@ -818,9 +818,9 @@ class LayeredGroupBase:
             self.LG.add(self.sprite(), layer=i)
         spr = self.sprite()
         self.LG.add(spr, layer=55)
-        self.assert_(spr != self.LG._spritelist[0])
+        self.assertTrue(spr != self.LG._spritelist[0])
         self.LG.move_to_back(spr)
-        self.assert_(spr == self.LG._spritelist[0])
+        self.assertTrue(spr == self.LG._spritelist[0])
 
     def test_get_top_sprite(self):
         # test_get_top_sprite
@@ -828,12 +828,12 @@ class LayeredGroupBase:
         layers = [1,5,2,8,4,5,3,88,23,0]
         for i in layers:
             self.LG.add(self.sprite(), layer=i)
-        self.assert_(self.LG.get_layer_of_sprite(self.LG.get_top_sprite())== self.LG.get_top_layer())
+        self.assertTrue(self.LG.get_layer_of_sprite(self.LG.get_top_sprite())== self.LG.get_top_layer())
 
     def test_get_sprites_from_layer(self):
         # test_get_sprites_from_layer
 
-        self.assert_(len(self.LG)==0)
+        self.assertTrue(len(self.LG)==0)
         sprites = {}
         layers = [1,4,5,6,3,7,8,2,1,3,4,5,6,7,8,9,1,2,3,4,5,6,7,8,9,0,1,6,5,4,3,2]
         for lay in layers:
@@ -846,16 +846,16 @@ class LayeredGroupBase:
 
         for lay in self.LG.layers():
             for spr in self.LG.get_sprites_from_layer(lay):
-                self.assert_(spr in sprites[lay])
+                self.assertTrue(spr in sprites[lay])
                 sprites[lay].remove(spr)
                 if len(sprites[lay]) == 0:
                     del sprites[lay]
-        self.assert_(len(sprites.values())==0)
+        self.assertTrue(len(list(sprites.values()))==0)
 
     def test_switch_layer(self):
         # test_switch_layer
 
-        self.assert_(len(self.LG)==0)
+        self.assertTrue(len(self.LG)==0)
         sprites1 = []
         sprites2 = []
         layers = [3,2,3,2,3,3,2,2,3,2,3,2,3,2,3,2,3,3,2,2,3,2,3]
@@ -869,26 +869,26 @@ class LayeredGroupBase:
                 sprites2.append(spr)
 
         for spr in sprites1:
-            self.assert_(spr in self.LG.get_sprites_from_layer(2))
+            self.assertTrue(spr in self.LG.get_sprites_from_layer(2))
         for spr in sprites2:
-            self.assert_(spr in self.LG.get_sprites_from_layer(3))
-        self.assert_(len(self.LG)==len(sprites1)+len(sprites2))
+            self.assertTrue(spr in self.LG.get_sprites_from_layer(3))
+        self.assertTrue(len(self.LG)==len(sprites1)+len(sprites2))
 
         self.LG.switch_layer(2,3)
 
         for spr in sprites1:
-            self.assert_(spr in self.LG.get_sprites_from_layer(3))
+            self.assertTrue(spr in self.LG.get_sprites_from_layer(3))
         for spr in sprites2:
-            self.assert_(spr in self.LG.get_sprites_from_layer(2))
-        self.assert_(len(self.LG)==len(sprites1)+len(sprites2))
+            self.assertTrue(spr in self.LG.get_sprites_from_layer(2))
+        self.assertTrue(len(self.LG)==len(sprites1)+len(sprites2))
 
     def test_copy(self):
 
         self.LG.add(self.sprite())
         spr = self.LG.sprites()[0]
         lg_copy = self.LG.copy()
-        self.assert_(isinstance(lg_copy, type(self.LG)))
-        self.assert_(spr in lg_copy and lg_copy in spr.groups())
+        self.assertTrue(isinstance(lg_copy, type(self.LG)))
+        self.assertTrue(spr in lg_copy and lg_copy in spr.groups())
 
 ########################## LAYERED RENDER GROUP TESTS ##########################
 
@@ -943,7 +943,7 @@ class SpriteBase:
             self.sprite.add_internal(g)
             
         for g in self.groups:
-            self.assert_(g in self.sprite.groups())
+            self.assertTrue(g in self.sprite.groups())
 
     def test_remove_internal(self):
 
@@ -973,7 +973,7 @@ class SpriteBase:
     def test___init____added_to_groups_passed(self):
         self.sprite = self.Sprite(self.groups)
 
-        self.assert_(unordered_equality(
+        self.assertTrue(unordered_equality(
             self.sprite.groups(),
             self.groups
         ))
@@ -981,26 +981,26 @@ class SpriteBase:
     def test_add(self):
         self.sprite.add(self.groups)
 
-        self.assert_(unordered_equality(
+        self.assertTrue(unordered_equality(
             self.sprite.groups(),
             self.groups
         ))
 
     def test_alive(self):
-        self.assert_(
+        self.assertTrue(
             not self.sprite.alive(),
             "Sprite should not be alive if in no groups"
         )
 
         self.sprite.add(self.groups)
-        self.assert_(self.sprite.alive())
+        self.assertTrue(self.sprite.alive())
 
     def test_groups(self):
         for i, g in enumerate(self.groups):
             self.sprite.add(g)
 
             groups = self.sprite.groups()
-            self.assert_( unordered_equality (
+            self.assertTrue( unordered_equality (
                     groups,
                     self.groups[:i+1],
             ))
@@ -1008,15 +1008,15 @@ class SpriteBase:
     def test_kill(self):
         self.sprite.add(self.groups)
 
-        self.assert_(self.sprite.alive())
+        self.assertTrue(self.sprite.alive())
         self.sprite.kill()
 
-        self.assert_(not self.sprite.groups() and not self.sprite.alive() )
+        self.assertTrue(not self.sprite.groups() and not self.sprite.alive() )
 
     def test_remove(self):
         self.sprite.add(self.groups)
         self.sprite.remove(self.groups)
-        self.assert_(not self.sprite.groups())
+        self.assertTrue(not self.sprite.groups())
 
 ############################## SPRITE CLASS TESTS ##############################
 
@@ -1060,12 +1060,12 @@ class SingleGroupBugsTest(unittest.TestCase):
         g.sprite = s
         del s
         gc.collect()
-        self.assert_(r() is not None)
+        self.assertTrue(r() is not None)
         g.update()
         g.draw(screen)
         g.sprite = MySprite()
         gc.collect()
-        self.assert_(r() is None)
+        self.assertTrue(r() is None)
         
 ################################################################################
 

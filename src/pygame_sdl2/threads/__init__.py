@@ -20,12 +20,12 @@ if sys.version_info[0] == 3:
     from queue import Queue
     from queue import Empty
 elif (sys.version_info[0] == 2 and sys.version_info[1] < 5):
-    from Py25Queue import Queue
-    from Py25Queue import Empty
+    from .Py25Queue import Queue
+    from .Py25Queue import Empty
 else:
     # use up to date version
-    from Queue import Queue
-    from Queue import Empty
+    from queue import Queue
+    from queue import Empty
     
 import threading
 Thread = threading.Thread
@@ -123,7 +123,7 @@ def benchmark_workers(a_bench_func = None, the_data = None):
         wq = WorkerQueue(num_workers)
         t1 = time.time()
         for xx in range(20):
-            print ("active count:%s" % threading.activeCount())
+            print(("active count:%s" % threading.activeCount()))
             results = tmap(doit, thedata, worker_queue = wq)
         t2 = time.time()
 
@@ -131,7 +131,7 @@ def benchmark_workers(a_bench_func = None, the_data = None):
 
 
         total_time = t2 - t1
-        print ("total time num_workers:%s: time:%s:" % (num_workers, total_time))
+        print(("total time num_workers:%s: time:%s:" % (num_workers, total_time)))
 
         if total_time < best:
             last_best = best_number
@@ -254,14 +254,14 @@ def tmap(f, seq_args, num_workers = 20, worker_queue = None, wait = True, stop_o
             wq = _wq
         else:
             if num_workers == 0:
-                return map(f, seq_args)
+                return list(map(f, seq_args))
 
             wq = WorkerQueue(num_workers)
 
     # we short cut it here if the number of workers is 0.
     # normal map should be faster in this case.
     if len(wq.pool) == 0:
-        return map(f, seq_args)
+        return list(map(f, seq_args))
 
     #print ("queue size:%s" % wq.queue.qsize())
 
@@ -301,10 +301,10 @@ def tmap(f, seq_args, num_workers = 20, worker_queue = None, wait = True, stop_o
         # TODO: the traceback doesn't show up nicely.
         # NOTE: TODO: we might want to return the results anyway?  This should be an option.
         if stop_on_error:
-            error_ones = list(filter(lambda x:x.exception, results))
+            error_ones = list([x for x in results if x.exception])
             if error_ones:
                 raise error_ones[0].exception
         
-        return map(lambda x:x.result, results)
+        return [x.result for x in results]
     else:
         return [wq, results]

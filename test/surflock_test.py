@@ -24,20 +24,20 @@ class SurfaceLockTest (unittest.TestCase):
         sf = pygame.Surface ((5, 5))
 
         sf.lock ()
-        self.assertEquals (sf.get_locked (), True)
-        self.assertEquals (sf.get_locks (), (sf,))
+        self.assertEqual (sf.get_locked (), True)
+        self.assertEqual (sf.get_locks (), (sf,))
 
         sf.lock ()
-        self.assertEquals (sf.get_locked (), True)
-        self.assertEquals (sf.get_locks (), (sf, sf))
+        self.assertEqual (sf.get_locked (), True)
+        self.assertEqual (sf.get_locks (), (sf, sf))
 
         sf.unlock ()
-        self.assertEquals (sf.get_locked (), True)
-        self.assertEquals (sf.get_locks (), (sf,))
+        self.assertEqual (sf.get_locked (), True)
+        self.assertEqual (sf.get_locks (), (sf,))
 
         sf.unlock ()
-        self.assertEquals (sf.get_locked (), False)
-        self.assertEquals (sf.get_locks (), ())
+        self.assertEqual (sf.get_locked (), False)
+        self.assertEqual (sf.get_locks (), ())
 
     def test_subsurface_lock (self):
         sf = pygame.Surface ((5, 5))
@@ -80,75 +80,75 @@ class SurfaceLockTest (unittest.TestCase):
         subsf.unlock ()
         
         sf.lock ()
-        self.assertEquals (sf.get_locked (), True)
-        self.assertEquals (sf.get_locks (), (sf,))
-        self.assertEquals (subsf.get_locked (), False)
-        self.assertEquals (subsf.get_locks (), ())
+        self.assertEqual (sf.get_locked (), True)
+        self.assertEqual (sf.get_locks (), (sf,))
+        self.assertEqual (subsf.get_locked (), False)
+        self.assertEqual (subsf.get_locks (), ())
 
         subsf.lock ()
-        self.assertEquals (sf.get_locked (), True)
-        self.assertEquals (sf.get_locks (), (sf, subsf))
-        self.assertEquals (subsf.get_locked (), True)
-        self.assertEquals (subsf.get_locks (), (subsf,))
+        self.assertEqual (sf.get_locked (), True)
+        self.assertEqual (sf.get_locks (), (sf, subsf))
+        self.assertEqual (subsf.get_locked (), True)
+        self.assertEqual (subsf.get_locks (), (subsf,))
 
         sf.unlock ()
-        self.assertEquals (sf.get_locked (), True)
-        self.assertEquals (sf.get_locks (), (subsf,))
-        self.assertEquals (subsf.get_locked (), True)
-        self.assertEquals (subsf.get_locks (), (subsf,))
+        self.assertEqual (sf.get_locked (), True)
+        self.assertEqual (sf.get_locks (), (subsf,))
+        self.assertEqual (subsf.get_locked (), True)
+        self.assertEqual (subsf.get_locks (), (subsf,))
 
         subsf.unlock ()
-        self.assertEquals (sf.get_locked (), False)
-        self.assertEquals (sf.get_locks (), ())
-        self.assertEquals (subsf.get_locked (), False)
-        self.assertEquals (subsf.get_locks (), ())
+        self.assertEqual (sf.get_locked (), False)
+        self.assertEqual (sf.get_locks (), ())
+        self.assertEqual (subsf.get_locked (), False)
+        self.assertEqual (subsf.get_locks (), ())
 
         subsf.lock ()
-        self.assertEquals (sf.get_locked (), True)
-        self.assertEquals (sf.get_locks (), (subsf,))
-        self.assertEquals (subsf.get_locked (), True)
-        self.assertEquals (subsf.get_locks (), (subsf,))
+        self.assertEqual (sf.get_locked (), True)
+        self.assertEqual (sf.get_locks (), (subsf,))
+        self.assertEqual (subsf.get_locked (), True)
+        self.assertEqual (subsf.get_locks (), (subsf,))
 
         subsf.lock ()
-        self.assertEquals (sf.get_locked (), True)
-        self.assertEquals (sf.get_locks (), (subsf, subsf))
-        self.assertEquals (subsf.get_locked (), True)
-        self.assertEquals (subsf.get_locks (), (subsf, subsf))
+        self.assertEqual (sf.get_locked (), True)
+        self.assertEqual (sf.get_locks (), (subsf, subsf))
+        self.assertEqual (subsf.get_locked (), True)
+        self.assertEqual (subsf.get_locks (), (subsf, subsf))
 
     def test_pxarray_ref (self):
         sf = pygame.Surface ((5, 5))
         ar = pygame.PixelArray (sf)
         ar2 = pygame.PixelArray (sf)
 
-        self.assertEquals (sf.get_locked (), True)
-        self.assertEquals (sf.get_locks (), (ar, ar2))
+        self.assertEqual (sf.get_locked (), True)
+        self.assertEqual (sf.get_locks (), (ar, ar2))
 
         del ar
-        self.assertEquals (sf.get_locked (), True)
-        self.assertEquals (sf.get_locks (), (ar2,))
+        self.assertEqual (sf.get_locked (), True)
+        self.assertEqual (sf.get_locks (), (ar2,))
 
         ar = ar2[:]
-        self.assertEquals (sf.get_locked (), True)
-        self.assertEquals (sf.get_locks (), (ar2,))
+        self.assertEqual (sf.get_locked (), True)
+        self.assertEqual (sf.get_locks (), (ar2,))
 
         del ar
-        self.assertEquals (sf.get_locked (), True)
-        self.assertEquals (len (sf.get_locks ()), 1)
+        self.assertEqual (sf.get_locked (), True)
+        self.assertEqual (len (sf.get_locks ()), 1)
 
     def test_buffer (self):
         sf = pygame.Surface ((5, 5))
         buf = sf.get_buffer ()
 
-        self.assertEquals (sf.get_locked (), True)
-        self.assertEquals (sf.get_locks (), (buf,))
+        self.assertEqual (sf.get_locked (), True)
+        self.assertEqual (sf.get_locks (), (buf,))
 
         sf.unlock ()
-        self.assertEquals (sf.get_locked (), True)
-        self.assertEquals (sf.get_locks (), (buf,))
+        self.assertEqual (sf.get_locked (), True)
+        self.assertEqual (sf.get_locks (), (buf,))
 
         del buf
-        self.assertEquals (sf.get_locked (), False)
-        self.assertEquals (sf.get_locks (), ())
+        self.assertEqual (sf.get_locked (), False)
+        self.assertEqual (sf.get_locks (), ())
 
 
 if __name__ == '__main__':

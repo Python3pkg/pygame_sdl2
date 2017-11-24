@@ -46,7 +46,7 @@ class BaseModuleTest(unittest.TestCase):
           # pygame.get_sdl_byteorder(): return int
           # get the byte order of SDL
 
-        self.assert_(pygame.get_sdl_byteorder() + 1)
+        self.assertTrue(pygame.get_sdl_byteorder() + 1)
 
     def test_get_sdl_version(self):
 
@@ -55,7 +55,7 @@ class BaseModuleTest(unittest.TestCase):
           # pygame.get_sdl_version(): return major, minor, patch
           # get the version number of SDL
 
-        self.assert_( len(pygame.get_sdl_version()) == 3)
+        self.assertTrue( len(pygame.get_sdl_version()) == 3)
 
     class ExporterBase(object):
         def __init__(self, shape, typechar, itemsize):
@@ -481,13 +481,13 @@ class BaseModuleTest(unittest.TestCase):
         self.assertRaises(ValueError, getattr, bp, 'length')
 
     def not_init_assertions(self):
-        self.assert_(not pygame.display.get_init(),
+        self.assertTrue(not pygame.display.get_init(),
                      "display shouldn't be initialized" )
         if 'pygame.mixer' in sys.modules:
-            self.assert_(not pygame.mixer.get_init(),
+            self.assertTrue(not pygame.mixer.get_init(),
                          "mixer shouldn't be initialized" )
         if 'pygame.font' in sys.modules:
-            self.assert_(not pygame.font.get_init(),
+            self.assertTrue(not pygame.font.get_init(),
                          "init shouldn't be initialized" )
 
         ## !!! TODO : Remove when scrap works for OS X
@@ -505,11 +505,11 @@ class BaseModuleTest(unittest.TestCase):
         # pygame.joystick
 
     def init_assertions(self):
-        self.assert_(pygame.display.get_init())
+        self.assertTrue(pygame.display.get_init())
         if 'pygame.mixer' in sys.modules:
-            self.assert_(pygame.mixer.get_init())
+            self.assertTrue(pygame.mixer.get_init())
         if 'pygame.font' in sys.modules:
-            self.assert_(pygame.font.get_init())
+            self.assertTrue(pygame.font.get_init())
 
     def test_quit__and_init(self):
         # __doc__ (as of 2008-06-25) for pygame.base.quit:
@@ -539,13 +539,13 @@ class BaseModuleTest(unittest.TestCase):
           # register_quit(callable): return None
           # register a function to be called when pygame quits
 
-        self.assert_(not quit_hook_ran)
+        self.assertTrue(not quit_hook_ran)
 
         pygame.init()
         pygame.register_quit(quit_hook)
         pygame.quit()
 
-        self.assert_(quit_hook_ran)
+        self.assertTrue(quit_hook_ran)
 
     def test_get_error(self):
 

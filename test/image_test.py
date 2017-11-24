@@ -76,10 +76,10 @@ class ImageModuleTest( unittest.TestCase ):
         pixel_x0_y1 = surf.get_at((0, 1))
         pixel_x1_y1 = surf.get_at((1, 1))
 
-        self.assertEquals(pixel_x0_y0, reddish_pixel)
-        self.assertEquals(pixel_x1_y0, greenish_pixel)
-        self.assertEquals(pixel_x0_y1, bluish_pixel)
-        self.assertEquals(pixel_x1_y1, greyish_pixel)
+        self.assertEqual(pixel_x0_y0, reddish_pixel)
+        self.assertEqual(pixel_x1_y0, greenish_pixel)
+        self.assertEqual(pixel_x0_y1, bluish_pixel)
+        self.assertEqual(pixel_x1_y1, greyish_pixel)
 
         # Read the PNG file obj. and verify that pygame interprets it correctly
         f = open(f_path, 'rb')
@@ -91,10 +91,10 @@ class ImageModuleTest( unittest.TestCase ):
         pixel_x0_y1 = surf.get_at((0, 1))
         pixel_x1_y1 = surf.get_at((1, 1))
 
-        self.assertEquals(pixel_x0_y0, reddish_pixel)
-        self.assertEquals(pixel_x1_y0, greenish_pixel)
-        self.assertEquals(pixel_x0_y1, bluish_pixel)
-        self.assertEquals(pixel_x1_y1, greyish_pixel)
+        self.assertEqual(pixel_x0_y0, reddish_pixel)
+        self.assertEqual(pixel_x1_y0, greenish_pixel)
+        self.assertEqual(pixel_x0_y1, bluish_pixel)
+        self.assertEqual(pixel_x1_y1, greyish_pixel)
 
         os.remove(f_path) 
 
@@ -138,10 +138,10 @@ class ImageModuleTest( unittest.TestCase ):
         for pixel in pixels:
             pixels_as_tuples.append(tuple(pixel))
 
-        self.assertEquals(pixels_as_tuples[0], reddish_pixel)
-        self.assertEquals(pixels_as_tuples[1], greenish_pixel)
-        self.assertEquals(pixels_as_tuples[2], bluish_pixel)
-        self.assertEquals(pixels_as_tuples[3], greyish_pixel)
+        self.assertEqual(pixels_as_tuples[0], reddish_pixel)
+        self.assertEqual(pixels_as_tuples[1], greenish_pixel)
+        self.assertEqual(pixels_as_tuples[2], bluish_pixel)
+        self.assertEqual(pixels_as_tuples[3], greyish_pixel)
 
         os.remove(f_path)
 
@@ -172,7 +172,7 @@ class ImageModuleTest( unittest.TestCase ):
                 s2 = pygame.image.load(temp_filename)
                 #compare contents, might only work reliably for png... 
                 #   but because it's all one color it seems to work with jpg.
-                self.assertEquals(s2.get_at((0,0)), s.get_at((0,0)))
+                self.assertEqual(s2.get_at((0,0)), s.get_at((0,0)))
             finally:
                 #clean up the temp file, comment out to leave tmp file after run.
                 os.remove(temp_filename)
@@ -296,19 +296,19 @@ class ImageModuleTest( unittest.TestCase ):
                 test_surface.set_at((j + 32, i), (i, i, intensity, i))
                 test_surface.set_at((j + 32, i), (i, i, i, intensity))
             
-        self.assert_(AreSurfacesIdentical(test_surface, test_surface))
+        self.assertTrue(AreSurfacesIdentical(test_surface, test_surface))
 
         rgba_buf = pygame.image.tostring(test_surface, "RGBA")
         rgba_buf = RotateARGBtoRGBA(RotateRGBAtoARGB(rgba_buf))
         test_rotate_functions = pygame.image.fromstring(rgba_buf, test_surface.get_size(), "RGBA")
 
-        self.assert_(AreSurfacesIdentical(test_surface, test_rotate_functions))
+        self.assertTrue(AreSurfacesIdentical(test_surface, test_rotate_functions))
 
         rgba_buf = pygame.image.tostring(test_surface, "RGBA")
         argb_buf = RotateRGBAtoARGB(rgba_buf)
         test_from_argb_string = pygame.image.fromstring(argb_buf, test_surface.get_size(), "ARGB")
 
-        self.assert_(AreSurfacesIdentical(test_surface, test_from_argb_string))
+        self.assertTrue(AreSurfacesIdentical(test_surface, test_from_argb_string))
         #"ERROR: image.fromstring with ARGB failed"
 
 
@@ -316,14 +316,14 @@ class ImageModuleTest( unittest.TestCase ):
         rgba_buf = RotateARGBtoRGBA(argb_buf)
         test_to_argb_string = pygame.image.fromstring(rgba_buf, test_surface.get_size(), "RGBA")
 
-        self.assert_(AreSurfacesIdentical(test_surface, test_to_argb_string))
+        self.assertTrue(AreSurfacesIdentical(test_surface, test_to_argb_string))
         #"ERROR: image.tostring with ARGB failed"
 
 
         argb_buf = pygame.image.tostring(test_surface, "ARGB")
         test_to_from_argb_string = pygame.image.fromstring(argb_buf, test_surface.get_size(), "ARGB")
 
-        self.assert_(AreSurfacesIdentical(test_surface, test_to_from_argb_string))
+        self.assertTrue(AreSurfacesIdentical(test_surface, test_to_from_argb_string))
         #"ERROR: image.fromstring and image.tostring with ARGB are not symmetric"
 
     def todo_test_frombuffer(self):

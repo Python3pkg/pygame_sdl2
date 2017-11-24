@@ -12,7 +12,7 @@ import subprocess
 import errno
 import time
 import sys
-import unittest
+from . import unittest
 import tempfile
 
 def geterror ():
@@ -262,8 +262,8 @@ class AsyncTest(unittest.TestCase):
             [sys.executable, '-c', 'while 1: pass'], time_out = 1
         )
         
-        self.assert_( 'rocess timed out' in ret_code )
-        self.assert_( 'successfully terminated' in ret_code )
+        self.assertTrue( 'rocess timed out' in ret_code )
+        self.assertTrue( 'successfully terminated' in ret_code )
 
 ################################################################################
 
@@ -281,7 +281,7 @@ def _example():
         sys.stdout.write(a.read_async())
         sys.stdout.write(" ")
     a.send_all('exit' + tail)
-    print (a.read_async(e=0))
+    print((a.read_async(e=0)))
     a.wait()
 
 ################################################################################

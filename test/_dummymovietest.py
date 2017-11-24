@@ -1,6 +1,6 @@
 #################################### IMPORTS ###################################
 
-from __future__ import generators
+
 
 if __name__ == '__main__':
     import sys

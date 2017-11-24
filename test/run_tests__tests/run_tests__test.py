@@ -31,7 +31,7 @@ def call_proc(cmd, cd=None):
 	universal_newlines = True,
     )
     if proc.wait():
-        print ("%s %s" % (cmd, proc.wait()))
+        print(("%s %s" % (cmd, proc.wait())))
         raise Exception(proc.stdout.read())
 
     return proc.stdout.read()
@@ -65,7 +65,7 @@ def assert_on_results(suite, single, sub):
     test = globals().get('%s_test' % suite)
     if hasattr(test, '__call_'):
         test(suite, single, sub)
-        print ("assertions on %s OK" % (suite,))
+        print(("assertions on %s OK" % (suite,)))
 
 def incomplete_test(suite, *args):
     for results in args:
@@ -101,25 +101,25 @@ for suite in test_suite_dirs:
     single = call_proc(cmd + [suite], trunk_dir)
     subs = call_proc(sub_cmd + [suite], trunk_dir)
 
-    normed_single, normed_subs = map(norm_result,(single, subs))
+    normed_single, normed_subs = list(map(norm_result,(single, subs)))
 
     failed = normed_single != normed_subs
     if failed:
-        print ('%s suite comparison FAILED\n' % (suite,))
+        print(('%s suite comparison FAILED\n' % (suite,)))
     else:
         passes += 1
-        print ('%s suite comparison OK' % (suite,))
+        print(('%s suite comparison OK' % (suite,)))
     
     assert_on_results(suite, single, subs)
 
     if verbose or failed:
         print ("difflib.Differ().compare(single, suprocessed):\n")
-        print (''.join ( list(
+        print((''.join ( list(
             difflib.Differ().compare (
                 (unnormed_diff and single or normed_single).splitlines(1),
                 (unnormed_diff and subs or normed_subs).splitlines(1)
             ))
-        ))
+        )))
 
 sys.stdout.write("infinite_loop suite (subprocess mode timeout) ")
 loop_test = call_proc(time_out_cmd, trunk_dir)
@@ -127,7 +127,7 @@ assert "successfully terminated" in loop_test
 passes += 1
 print ("OK")
 
-print ("\n%s/%s suites pass" % (passes, len(test_suite_dirs) + 1))
+print(("\n%s/%s suites pass" % (passes, len(test_suite_dirs) + 1)))
 
 print ("\n-h for help")
 

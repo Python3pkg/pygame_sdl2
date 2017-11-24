@@ -3,7 +3,7 @@
 PYTHONPATH=/home/wazoocom/www/pygame/libs exec /home/wazoocom/bin/python $0 ${1+"$@"}
 """
 
-from __future__ import with_statement
+
 
 import os
 
@@ -15,7 +15,7 @@ def main():
     
     platform_id = q['platform_id'].value
     revision = q['revision'].value
-    which_info = q.has_key('info') and q['info'].value.strip() or 'setup'
+    which_info = 'info' in q and q['info'].value.strip() or 'setup'
     
     results_zip = '%s_%s.zip' % (platform_id, revision)
     
@@ -55,9 +55,9 @@ def main():
     </html>
     """
 
-    print TEMPLATE % locals()
+    print(TEMPLATE % locals())
 
 try:
     main()
-except Exception, e:
-    print 'woah woah!'
+except Exception as e:
+    print('woah woah!')

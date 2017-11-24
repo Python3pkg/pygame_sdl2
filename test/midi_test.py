@@ -252,7 +252,7 @@ class MidiTest( unittest.TestCase ):
 
         c = pygame.midi.get_count()
         self.assertEqual(type(c), type(1))
-        self.failUnless(c >= 0)
+        self.assertTrue(c >= 0)
 
 
 
@@ -308,7 +308,7 @@ class MidiTest( unittest.TestCase ):
         c = pygame.midi.get_default_input_id()
         # if there is a not None return make sure it is an int.
         self.assertEqual(type(c), type(1))
-        self.failUnless(c >= 0 or c == -1)
+        self.assertTrue(c >= 0 or c == -1)
 
 
 
@@ -363,7 +363,7 @@ class MidiTest( unittest.TestCase ):
 
         c = pygame.midi.get_default_output_id()
         self.assertEqual(type(c), type(1))
-        self.failUnless(c >= 0 or c == -1)
+        self.assertTrue(c >= 0 or c == -1)
 
 
 
@@ -472,7 +472,7 @@ class MidiTest( unittest.TestCase ):
         t = pygame.midi.time()
         self.assertEqual(type(t), type(1))
         # should be close to 2-3... since the timer is just init'd.
-        self.failUnless(t >= 0 and t < 100)
+        self.assertTrue(t >= 0 and t < 100)
 
 
  

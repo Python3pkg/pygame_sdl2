@@ -13,12 +13,12 @@ import shutil
 import traceback
 
 # User Libs
-import callproc
-import config
-import upload_results
+from . import callproc
+from . import config
+from . import upload_results
 
-from regexes import *
-from helpers import *
+from .regexes import *
+from .helpers import *
 
 ################################################################################
 # Results
@@ -64,7 +64,7 @@ def errors_by_file_4_web(errors_by_file, format, cb = None, join='<hr>'):
 
     web_friendly = []
 
-    for error_file, errors in errors_by_file.items():
+    for error_file, errors in list(errors_by_file.items()):
         for error in errors:
             error.update({'error_file': os.path.basename(error_file)})
             if cb: cb(error)
@@ -85,8 +85,8 @@ def svn_blame(error_file):
 def add_blame_to_errors_by_file( src_root, errors_by_file, line_func = None):
     if not line_func: line_func = lambda error: int(error['line'])
 
-    for error_file, errors in errors_by_file.items():
-        print "blame for %s" % error_file
+    for error_file, errors in list(errors_by_file.items()):
+        print("blame for %s" % error_file)
 
         ret_code, blame_output = svn_blame(error_file)
 
@@ -258,7 +258,7 @@ def prepare_build_results( build_result, build_errors, build_warnings):
     file(config.last_rev_filename, "w").write(str(config.latest_rev))
 
 def post_build():
-    print upload_results.post_build(config.buildresults_zip)
+    print(upload_results.post_build(config.buildresults_zip))
 
 ################################################################################
 
@@ -285,7 +285,7 @@ def update_build():
         if config.make_package:
             prepare_installer(build_result)
 
-    print '\n%s\n' % build_result
+    print('\n%s\n' % build_result)
 
     prepare_build_results(build_result, build_errors, build_warnings)
 
@@ -328,7 +328,7 @@ def main():
             prepare_build_env()
             update_build()
         else:
-            print 'Revision already built for %s' % config.platform_id
+            print('Revision already built for %s' % config.platform_id)
 
 if __name__ == '__main__':
     main()

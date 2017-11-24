@@ -502,14 +502,14 @@ class PixelCopyTestWithArray(unittest.TestCase):
         color = array([11, 17, 59], uint8)
         target = zeros((5, 7), int32)
         map_array(target, color, surf)
-        self.assert_(alltrue(target == surf.map_rgb(color)))
+        self.assertTrue(alltrue(target == surf.map_rgb(color)))
 
         # array column stripes
         stripe = array([[2, 5, 7], [11, 19, 23], [37, 53, 101]], uint8)
         target = zeros((4, stripe.shape[0]), int32)
         map_array(target, stripe, surf)
         target_stripe = array([surf.map_rgb(c) for c in stripe], int32)
-        self.assert_(alltrue(target == target_stripe))
+        self.assertTrue(alltrue(target == target_stripe))
 
         # array row stripes
         stripe = array([[[2, 5, 7]],
@@ -519,7 +519,7 @@ class PixelCopyTestWithArray(unittest.TestCase):
         target = zeros((stripe.shape[0], 3), int32)
         map_array(target, stripe, surf)
         target_stripe = array([[surf.map_rgb(c)] for c in stripe[:,0]], int32)
-        self.assert_(alltrue(target == target_stripe))
+        self.assertTrue(alltrue(target == target_stripe))
 
         # mismatched shape
         w = 4
@@ -608,14 +608,14 @@ class PixelCopyTestWithArray(unittest.TestCase):
                                  array[x, y])
 
     def test_surface_to_array_newbuf(self):
-        array = self.Array2D(range(0, 15))
+        array = self.Array2D(list(range(0, 15)))
         self.assertNotEqual(array.content[0],
                             self.surface.get_at_mapped((0, 0)))
         surface_to_array(array, self.surface)
         self.assertCopy2D(self.surface, array)
 
     def test_array_to_surface_newbuf(self):
-        array = self.Array2D(range(0, 15))
+        array = self.Array2D(list(range(0, 15)))
         self.assertNotEqual(array.content[0],
                             self.surface.get_at_mapped((0, 0)))
         array_to_surface(self.surface, array)
@@ -632,7 +632,7 @@ class PixelCopyTestWithArray(unittest.TestCase):
                 self.assertEqual(self.surface.unmap_rgb(array2D[x, y]), p)
 
     def test_make_surface_newbuf(self):
-        array = self.Array2D(range(10, 160, 10))
+        array = self.Array2D(list(range(10, 160, 10)))
         surface = make_surface(array)
         self.assertCopy2D(surface, array)
 

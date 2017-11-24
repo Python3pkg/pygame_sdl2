@@ -40,7 +40,7 @@ class WorkerQueueTypeTest(unittest.TestCase):
         wq.wait()
         wq.stop()
 
-        self.assert_(fr.result  == 2)
+        self.assertTrue(fr.result  == 2)
         self.assertEqual(fr2.result, 3)
 
     def test_do(self):
@@ -60,15 +60,15 @@ class WorkerQueueTypeTest(unittest.TestCase):
         
         wq = WorkerQueue()
         
-        self.assert_(len(wq.pool) > 0)
-        for t in wq.pool: self.assert_(t.isAlive())
+        self.assertTrue(len(wq.pool) > 0)
+        for t in wq.pool: self.assertTrue(t.isAlive())
         
         for i in xrange_(200): wq.do(lambda x: x+1, i)
         
         wq.stop()
-        for t in wq.pool: self.assert_(not t.isAlive())
+        for t in wq.pool: self.assertTrue(not t.isAlive())
         
-        self.assert_(wq.queue.get() is STOP)
+        self.assertTrue(wq.queue.get() is STOP)
 
     def todo_test_threadloop(self):
 
@@ -120,7 +120,7 @@ class ThreadsModuleTest(unittest.TestCase):
 
         threads.init(8)
 
-        self.assert_(isinstance(threads._wq, WorkerQueue))
+        self.assertTrue(isinstance(threads._wq, WorkerQueue))
 
         threads.quit()
 
@@ -135,7 +135,7 @@ class ThreadsModuleTest(unittest.TestCase):
 
         threads.quit()
 
-        self.assert_(threads._wq is None)
+        self.assertTrue(threads._wq is None)
 
     def test_tmap(self):
         # __doc__ (as of 2008-06-28) for pygame.threads.tmap:
@@ -175,10 +175,10 @@ class ThreadsModuleTest(unittest.TestCase):
         self.assertEqual([(1, 22), (2, 33), (3, 44), (4, 55), (5,None)], res4)
         
     def test_tmap__wait(self):
-        r = range(1000)
+        r = list(range(1000))
         wq, results = tmap(lambda x:x, r, num_workers = 5, wait=False)
         wq.wait()
-        r2 = map(lambda x:x.result, results)
+        r2 = [x.result for x in results]
         self.assertEqual(list(r), list(r2))
 
     def test_FuncResult(self):
@@ -200,14 +200,14 @@ class ThreadsModuleTest(unittest.TestCase):
         self.assertEqual(fr.result, 3)
         
         # Exceptions are store in exception attribute
-        self.assert_(fr.exception is None,  "when no exception raised")
+        self.assertTrue(fr.exception is None,  "when no exception raised")
         
         exception = ValueError('rast')
         def x(sdf):
             raise exception
         fr = FuncResult(x)
         fr(None)
-        self.assert_(fr.exception is exception)
+        self.assertTrue(fr.exception is exception)
 
 ################################################################################
 

@@ -28,7 +28,7 @@ import sys
 import os
 import re
 try:
-    import StringIO
+    import io
 except ImportError:
     import io as StringIO
 import time
@@ -147,9 +147,9 @@ def combine_results(all_results, t):
     failures = []
 
     for module, results in sorted(all_results.items()):
-        output, return_code, raw_return = map (
+        output, return_code, raw_return = list(map (
             results.get, ('output','return_code', 'raw_return')
-        )
+        ))
 
         if not output or (return_code and RAN_TESTS_DIV not in output):
             # would this effect the original dict? TODO
@@ -164,7 +164,7 @@ def combine_results(all_results, t):
         if 'E' in dots or 'F' in dots:
             failures.append( output[len(dots)+1:].split(RAN_TESTS_DIV)[0] )
     
-    total_fails, total_errors = map(all_dots.count, 'FE')
+    total_fails, total_errors = list(map(all_dots.count, 'FE'))
     total_tests = len(all_dots)
 
     combined = [all_dots]
@@ -193,7 +193,7 @@ def get_test_results(raw_return):
         try:
             return eval(test_results.group(1))
         except:
-            print ("BUGGY TEST RESULTS EVAL:\n %s" % test_results.group(1))
+            print(("BUGGY TEST RESULTS EVAL:\n %s" % test_results.group(1)))
             raise
 
 ################################################################################
@@ -211,8 +211,8 @@ def make_complete_failure_error(result):
 # For combined results, plural
 def test_failures(results):
     errors = {}
-    total =  sum([v.get('num_tests', 0) for v in results.values()])
-    for module, result in results.items():
+    total =  sum([v.get('num_tests', 0) for v in list(results.values())])
+    for module, result in list(results.items()):
         num_errors = (
             len(result.get('failures', [])) + len(result.get('errors', []))
         )
@@ -271,12 +271,12 @@ def run_test(module, **kwds):
                                               m.unittest.__file__)
         )
     
-    print ('loading %s' % module)
+    print(('loading %s' % module))
 
     test = unittest.defaultTestLoader.loadTestsFromName(module)
     suite.addTest(test)
 
-    output = StringIO.StringIO()
+    output = io.StringIO()
     runner = unittest.TextTestRunner(stream=output)
 
     results = runner.run(suite)
@@ -291,7 +291,7 @@ def run_test(module, **kwds):
 
     if not option_nosubprocess:
         print (TEST_RESULTS_START)
-        print (pformat(results))
+        print((pformat(results)))
         print (TEST_RESULTS_END)
     else:
         return results

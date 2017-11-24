@@ -28,7 +28,7 @@ def prepare_results_dirs(d):
 
 q = cgi.FieldStorage()
 
-if q.has_key('results_file'):
+if 'results_file' in q:
     rz = ResultsZip(q['results_file'].file)
 
     results_dir = relative_to(__file__, '../results/%s' % rz.platform_id)
@@ -43,9 +43,9 @@ if q.has_key('results_file'):
     
     rz.close()
 
-    print '%s RESULTS UPLOAD SUCCESSFUL' % rz.platform_id.upper()
+    print('%s RESULTS UPLOAD SUCCESSFUL' % rz.platform_id.upper())
 else:
-    print """
+    print("""
     <html>
 
     <head><title>Testing</title></head>
@@ -62,6 +62,6 @@ else:
     
     </body>
     
-    </html>"""
+    </html>""")
 
 ################################################################################

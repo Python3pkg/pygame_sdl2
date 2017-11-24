@@ -36,7 +36,7 @@ class GL_ImageSave(unittest.TestCase):
         
         pygame.image.save(screen, tmp_file)
         
-        self.assert_(os.path.exists(tmp_file))
+        self.assertTrue(os.path.exists(tmp_file))
         
         os.remove(tmp_file)
 
@@ -45,7 +45,7 @@ class GL_ImageSave(unittest.TestCase):
         
         pygame.image.save(screen, tmp_file)
         
-        self.assert_(os.path.exists(tmp_file))
+        self.assertTrue(os.path.exists(tmp_file))
         
         os.remove(tmp_file)
         

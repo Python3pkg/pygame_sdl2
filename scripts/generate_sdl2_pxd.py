@@ -71,7 +71,7 @@ def check_name(n):
 
     name = getattr(n, "name", None)
 
-    if isinstance(name, basestring):
+    if isinstance(name, str):
         return name_filter(name)
 
     for _, node in n.children():

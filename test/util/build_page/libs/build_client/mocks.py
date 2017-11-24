@@ -7,12 +7,12 @@ import optparse
 import os
 
 # User Libs
-import regexes 
-import config
-import update
+from . import regexes 
+from . import config
+from . import update
 
-from update_test import fixture, mock_config
-from helpers import normp
+from .update_test import fixture, mock_config
+from .helpers import normp
 
 ################################################################################
 
@@ -44,7 +44,7 @@ def run_tests():
 
     update.run_tests()
     
-    print update.run_tests.output
+    print(update.run_tests.output)
 
 ################################################################################
 

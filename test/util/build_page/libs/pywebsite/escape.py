@@ -3,7 +3,7 @@
 ################################################################################
 
 import re
-import htmlentitydefs
+import html.entities
 
 _escape_re = re.compile(eval(r'u"[&<>\"]|[\u0080-\uffff]+"'))
 
@@ -13,11 +13,11 @@ def _escape_sub(match):
     try:
         entity_code = ord(match.group(0))
     
-    except Exception, e:
-        print match.group(0)
+    except Exception as e:
+        print(match.group(0))
         raise
 
-    named_entitiy = htmlentitydefs.codepoint2name.get(entity_code)
+    named_entitiy = html.entities.codepoint2name.get(entity_code)
     if named_entitiy: return '&%s;' % named_entitiy
     else: return '&#%d;' % entity_code
 
@@ -34,10 +34,10 @@ __all__ = ['escape', 'ehtml']
 ################################################################################
 
 if __name__ == '__main__':
-    print ehtml(
+    print(ehtml(
         '“Gross national happiness is more important”', 'utf-8'
-    )
+    ))
     
-    print ehtml('&&', 'utf-8')
+    print(ehtml('&&', 'utf-8'))
     
 ################################################################################
